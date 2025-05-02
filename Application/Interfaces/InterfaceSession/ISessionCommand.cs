@@ -9,7 +9,8 @@ namespace Application.Interfaces.InterfaceSession
 {
     public interface ISessionCommand
     {
-        Task<Session> CreateSession(Session newSession);
-        Task<Session> UpdateSession(Session oldSession,int id);
+        Task<Session> CreateSession(Session request);
+        Task UpdateSession(Session session);
+        
     }
 }

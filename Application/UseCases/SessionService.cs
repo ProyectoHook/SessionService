@@ -4,30 +4,73 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces.InterfaceSession;
+using Application.Request;
+using Application.Response;
 using Domain.Entities;
 
 namespace Application.UseCases
 {
     public class SessionService : ISessionService
     {
-        public Task<Session> CreateSession(Session newSession)
+        private readonly ISessionQuery _sessionQuery;
+        private readonly ISessionCommand _sessionCommand;
+
+        public SessionService(ISessionQuery sessionQuery, ISessionCommand sessionCommand)
         {
-            throw new NotImplementedException();
+            _sessionQuery = sessionQuery;
+            _sessionCommand = sessionCommand;
         }
 
-        public Task<List<Session>> GetAllSession()
+        public async Task<List<Session>> GetAllSession()
         {
-            throw new NotImplementedException();
+            return await _sessionQuery.GetAllSession();
+        }
+        public async Task<Session> GetSessionById(int id)
+        {
+            return await _sessionQuery.GetSessionById(id);
+        }
+        public async Task<SessionResponse> CreateSession(SessionRequest request)
+        {
+
+            Session _session = new Session
+            {
+                acces_code = request.acces_code,
+                idParticipant = request.idParticipant,
+                description = request.description,
+                interation_count = request.interation_count,
+                active_status = request.active_status,
+                max_participants = request.max_participants,
+                start_time = request.start_time,
+                end_time = request.end_time,    
+                presentation_id = request.presentation_id,
+            };
+
+            await _sessionCommand.CreateSession(_session);
+
+            SessionResponse sessionResponse = new SessionResponse
+            {
+                idSession = _session.idSession,
+                acces_code = _session.acces_code,
+                idParticipant = _session.idParticipant,
+                description = _session.description,
+                interation_count = _session.interation_count,
+                active_status = _session.active_status,
+                max_participants = _session.max_participants,
+                start_time = _session.start_time,
+                end_time = _session.end_time,
+                presentation_id = _session.presentation_id,
+            };
+
+            return sessionResponse;
+        }
+        public async Task UpdateSession(Session session)
+        {
+            await _sessionCommand.UpdateSession(session);
         }
 
-        public Task<Session> GetSessionById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Session> UpdateSession(Session oldSession, int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
+
+
+
+

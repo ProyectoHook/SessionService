@@ -5,19 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces.InterfaceSession;
 using Domain.Entities;
+using Infrastructrure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Infrastructrure.Command
 {
     public class ParticipantCommand : IParticipantCommand
     {
-        public Task<Participant> CreateSession_activity(Participant session)
+        private readonly AppDbContext _context;
+
+        public ParticipantCommand(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Participant> UpdateSession_activity(Participant session, int id)
+        public async Task<Participant> CreateSession_activity(Participant participant)
         {
-            throw new NotImplementedException();
+            _context.Participant.AddAsync(participant);
+            await _context.SaveChangesAsync();
+            return participant;
         }
     }
 }

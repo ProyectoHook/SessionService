@@ -11,7 +11,7 @@ namespace Infrastructrure.Persistence
     public class AppDbContext : DbContext
     {
         public DbSet<Session> Session { get; set; }
-        public DbSet<Participant> session_activity { get; set; }
+        public DbSet<Participant> Participant { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

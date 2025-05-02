@@ -13,14 +13,21 @@ namespace Infrastructrure.Query
 {
     public class SessionQuery : ISessionQuery
     {
-        public Task<List<Session>> GetAllSession()
+        private readonly AppDbContext _context;
+
+        public SessionQuery(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Session> GetSessionById(int id)
+        public async Task<List<Session>> GetAllSession()
         {
-            throw new NotImplementedException();
+            return await _context.Session.ToListAsync();
+        }
+
+        public async Task<Session> GetSessionById(int id)
+        {
+            return await _context.Session.FindAsync(id);
         }
     }
 }

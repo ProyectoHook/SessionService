@@ -13,7 +13,6 @@ namespace Domain.Entities
         public required DateTime connectionStart { get; set; }
         public required bool activityStatus { get; set; }
         public required int connectionId { get; set; }
-
         public Session session { get; set; }
     }
 }

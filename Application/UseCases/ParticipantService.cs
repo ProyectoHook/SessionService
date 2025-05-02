@@ -26,9 +26,5 @@ namespace Application.UseCases
             throw new NotImplementedException();
         }
 
-        public Task<Participant> UpdateSession_activity(Participant request, int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

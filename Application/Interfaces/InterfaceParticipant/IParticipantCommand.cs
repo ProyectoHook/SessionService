@@ -10,6 +10,5 @@ namespace Application.Interfaces.InterfaceSession
     public interface IParticipantCommand
     {
         Task<Participant> CreateSession_activity(Participant session);
-        Task<Participant> UpdateSession_activity(Participant session,int id);
     }
 }

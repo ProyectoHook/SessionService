@@ -1,4 +1,6 @@
 ﻿
+using Application.Request;
+using Application.Response;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,10 @@ namespace Application.Interfaces.InterfaceSession
 {
     public interface ISessionService
     {
-        Task<Session> CreateSession(Session newSession);
-        Task<Session> UpdateSession(Session oldSession, int id);
+        Task<SessionResponse> CreateSession(SessionRequest request);
         Task<Session> GetSessionById(int id);
         Task<List<Session>> GetAllSession();
+
+        Task UpdateSession(Session session);
     }
 }

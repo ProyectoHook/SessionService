@@ -13,14 +13,23 @@ namespace Infrastructrure.Command
 {
     public class SessionCommand : ISessionCommand
     {
-        public Task<Session> CreateSession(Session newSession)
+        private readonly AppDbContext _context;
+
+        public SessionCommand(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Session> UpdateSession(Session oldSession, int id)
+        public async Task<Session> CreateSession(Session session)
         {
-            throw new NotImplementedException();
+            _context.Session.AddAsync(session);
+            await _context.SaveChangesAsync();
+            return session;
+        }
+        public async Task UpdateSession(Session session)
+        {
+            _context.Session.Update(session);
+            await _context.SaveChangesAsync();
         }
     }
 }

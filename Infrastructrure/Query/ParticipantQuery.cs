@@ -5,19 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces.InterfaceSession;
 using Domain.Entities;
+using Infrastructrure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructrure.Query
 {
     public class ParticipantQuery : IParticipantQuery
     {
-        public Task<List<Participant>> GetAllSession_activity()
+        private readonly AppDbContext _context;
+
+        public ParticipantQuery(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Participant> GetSession_activityById(int id)
+        public async Task<List<Participant>> GetAllSession_activity()
         {
-            throw new NotImplementedException();
+            return await _context.Participant.ToListAsync();
+        }
+
+        public async Task<Participant> GetSession_activityById(int id)
+        {
+            return await _context.Participant.FindAsync(id);
         }
     }
 }
