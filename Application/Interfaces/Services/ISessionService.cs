@@ -1,5 +1,4 @@
-﻿
-using Application.Request;
+﻿using Application.Request;
 using Application.Response;
 using Domain.Entities;
 using System;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.InterfaceSession
+namespace Application.Interfaces.Services
 {
     public interface ISessionService
     {

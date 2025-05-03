@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Interfaces.InterfaceSession;
+using Application.Interfaces.Commands;
 using Domain.Entities;
 using Infrastructrure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -26,5 +26,12 @@ namespace Infrastructrure.Command
             await _context.SaveChangesAsync();
             return participant;
         }
+
+        public async Task Delete(Participant participant)
+        {
+            _context.Participant.Remove(participant);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

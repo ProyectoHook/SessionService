@@ -34,7 +34,7 @@ namespace Infrastructrure.Persistence
                 entity.HasOne(s => s.session)
                 .WithMany(l => l.Participants)
                 .HasForeignKey(n => n.idParticipant)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             });
         }

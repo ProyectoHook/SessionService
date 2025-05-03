@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces;
-using Application.Interfaces.InterfaceSession;
+using Application.Interfaces.Commands;
 using Domain.Entities;
 using Infrastructrure.Persistence;
 using Microsoft.EntityFrameworkCore;

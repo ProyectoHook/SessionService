@@ -1,16 +1,14 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.InterfaceSession
+namespace Application.Interfaces.Queries
 {
-    public interface IParticipantService
+    public interface IParticipantQuery
     {
-        Task<Participant> CreateSession_activity(Participant request);
         Task<Participant> GetSession_activityById(int id);
         Task<List<Participant>> GetAllSession_activity();
     }

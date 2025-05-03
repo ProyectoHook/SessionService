@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.InterfaceSession
+namespace Application.Interfaces.Commands
 {
     public interface ISessionCommand
     {

@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.InterfaceSession
+namespace Application.Interfaces.Commands
 {
     public interface IParticipantCommand
     {
         Task<Participant> CreateSession_activity(Participant session);
+          
+        Task Delete(Participant session);
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Application.Interfaces.InterfaceSession;
+using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
 using Application.UseCases;
@@ -63,6 +63,9 @@ namespace WebService.Controllers
             }
 
         }
+
+
+
         [HttpPost("join-session")]
         [Authorize]
         public async Task<IActionResult> UnirSession([FromBody] SessionRequest request)

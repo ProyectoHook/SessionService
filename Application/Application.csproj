@@ -7,12 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <Compile Remove="Interfaces\IMappers\**" />
+    <Compile Remove="Mappers\**" />
+    <EmbeddedResource Remove="Interfaces\IMappers\**" />
+    <EmbeddedResource Remove="Mappers\**" />
+    <None Remove="Interfaces\IMappers\**" />
+    <None Remove="Mappers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\IMappers\" />
-    <Folder Include="Mappers\" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>
