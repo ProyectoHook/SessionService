@@ -35,10 +35,6 @@
       "RelativeMoniker": "D:0:0:{F5F82D3E-9CC4-4B56-8C3A-693AF54E15AC}|Infrastructrure\\Infrastructrure.csproj|solutionrelative:infrastructrure\\persistence\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Infrastructrure\\Migrations\\20250503171229_first_setup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Infrastructrure\\Migrations\\20250503171229_first_setup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\application\\application.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
       "RelativeMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|solutionrelative:application\\application.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
@@ -65,6 +61,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{F5F82D3E-9CC4-4B56-8C3A-693AF54E15AC}|Infrastructrure\\Infrastructrure.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\infrastructrure\\query\\participantquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F5F82D3E-9CC4-4B56-8C3A-693AF54E15AC}|Infrastructrure\\Infrastructrure.csproj|solutionrelative:infrastructrure\\query\\participantquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5F82D3E-9CC4-4B56-8C3A-693AF54E15AC}|Infrastructrure\\Infrastructrure.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\infrastructrure\\migrations\\20250503171229_first_setup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5F82D3E-9CC4-4B56-8C3A-693AF54E15AC}|Infrastructrure\\Infrastructrure.csproj|solutionrelative:infrastructrure\\migrations\\20250503171229_first_setup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -84,7 +84,7 @@
               "RelativeDocumentMoniker": "Template\\Controllers\\SessionController.cs",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Controllers\\SessionController.cs",
               "RelativeToolTip": "Template\\Controllers\\SessionController.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAQwA0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAxwCIAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-03T17:41:30.338Z",
               "EditorCaption": ""
@@ -99,8 +99,7 @@
               "RelativeToolTip": "Application\\UseCases\\ParticipantService.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAABwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:19:58.407Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:19:58.407Z"
             },
             {
               "$type": "Document",
@@ -112,8 +111,7 @@
               "RelativeToolTip": "Application\\Interfaces\\Services\\IParticipantService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:19:32.151Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:19:32.151Z"
             },
             {
               "$type": "Document",
@@ -125,8 +123,7 @@
               "RelativeToolTip": "Application\\Interfaces\\Commands\\IParticipantCommand.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:15:33.329Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:15:33.329Z"
             },
             {
               "$type": "Document",
@@ -138,8 +135,7 @@
               "RelativeToolTip": "Infrastructrure\\Command\\ParticipantCommand.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAACAAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:14:57.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:14:57.08Z"
             },
             {
               "$type": "Document",
@@ -151,8 +147,7 @@
               "RelativeToolTip": "Infrastructrure\\Persistence\\AppDbContext.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:13:32.076Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:13:32.076Z"
             },
             {
               "$type": "Document",
@@ -164,8 +159,7 @@
               "RelativeToolTip": "Template\\Program.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAD4vxUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:00:23.074Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:00:23.074Z"
             },
             {
               "$type": "Document",
@@ -177,12 +171,11 @@
               "RelativeToolTip": "Application\\Request\\DeleteParticipant.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:21:05.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:21:05.9Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 15,
               "Title": "20250503171229_first_setup.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Infrastructrure\\Migrations\\20250503171229_first_setup.cs",
               "RelativeDocumentMoniker": "Infrastructrure\\Migrations\\20250503171229_first_setup.cs",
@@ -190,60 +183,55 @@
               "RelativeToolTip": "Infrastructrure\\Migrations\\20250503171229_first_setup.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T17:12:29.379Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:12:29.379Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "Application",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Application\\Application.csproj",
               "RelativeDocumentMoniker": "Application\\Application.csproj",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Application\\Application.csproj",
               "RelativeToolTip": "Application\\Application.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-03T17:09:34.784Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:09:34.784Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "Domain",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Domain\\Domain.csproj",
               "RelativeDocumentMoniker": "Domain\\Domain.csproj",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Domain\\Domain.csproj",
               "RelativeToolTip": "Domain\\Domain.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-03T17:09:28.231Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:09:28.231Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "Infrastructrure",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Infrastructrure\\Infrastructrure.csproj",
               "RelativeDocumentMoniker": "Infrastructrure\\Infrastructrure.csproj",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Infrastructrure\\Infrastructrure.csproj",
               "RelativeToolTip": "Infrastructrure\\Infrastructrure.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-03T17:09:16.619Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:09:16.619Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "Template",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Template.csproj",
               "RelativeDocumentMoniker": "Template\\Template.csproj",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Template.csproj",
               "RelativeToolTip": "Template\\Template.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-03T17:08:56.522Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:08:56.522Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\appsettings.json",
               "RelativeDocumentMoniker": "Template\\appsettings.json",
@@ -251,12 +239,11 @@
               "RelativeToolTip": "Template\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-03T17:00:40.505Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T17:00:40.505Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "SessionQuery.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Infrastructrure\\Query\\SessionQuery.cs",
               "RelativeDocumentMoniker": "Infrastructrure\\Query\\SessionQuery.cs",
@@ -264,12 +251,11 @@
               "RelativeToolTip": "Infrastructrure\\Query\\SessionQuery.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-02T14:19:43.899Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-02T14:19:43.899Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "ParticipantQuery.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Infrastructrure\\Query\\ParticipantQuery.cs",
               "RelativeDocumentMoniker": "Infrastructrure\\Query\\ParticipantQuery.cs",
@@ -277,8 +263,7 @@
               "RelativeToolTip": "Infrastructrure\\Query\\ParticipantQuery.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-02T14:19:42.363Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-02T14:19:42.363Z"
             }
           ]
         }
