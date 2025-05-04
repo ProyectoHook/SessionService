@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructrure.Migrations
 {
     /// <inheritdoc />
-    public partial class first_setup : Migration
+    public partial class first_Setup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,6 @@ namespace Infrastructrure.Migrations
                     idSession = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     acces_code = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    idParticipant = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     interation_count = table.Column<int>(type: "int", nullable: false),
                     active_status = table.Column<bool>(type: "bit", nullable: false),
@@ -36,22 +35,28 @@ namespace Infrastructrure.Migrations
                 name: "Participant",
                 columns: table => new
                 {
-                    idParticipant = table.Column<int>(type: "int", nullable: false),
+                    idParticipant = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     idUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     connectionStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     activityStatus = table.Column<bool>(type: "bit", nullable: false),
-                    connectionId = table.Column<int>(type: "int", nullable: false)
+                    connectionId = table.Column<int>(type: "int", nullable: false),
+                    idSession = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Participant", x => x.idParticipant);
                     table.ForeignKey(
-                        name: "FK_Participant_Session_idParticipant",
-                        column: x => x.idParticipant,
+                        name: "FK_Participant_Session_idSession",
+                        column: x => x.idSession,
                         principalTable: "Session",
-                        principalColumn: "idSession",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "idSession");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participant_idSession",
+                table: "Participant",
+                column: "idSession");
         }
 
         /// <inheritdoc />

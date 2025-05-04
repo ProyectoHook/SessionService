@@ -12,9 +12,8 @@ namespace Application.Interfaces.Services
     public interface ISessionService
     {
         Task<SessionResponse> CreateSession(SessionRequest request);
-        Task<Session> GetSessionById(int id);
-        Task<List<Session>> GetAllSession();
+        Task<SessionResponse> CloseSession(SessionRequest request);
+        Task<List<Session>> GetAllSessions();
 
-        Task UpdateSession(Session session);
     }
 }

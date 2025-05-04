@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructrure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250503171229_first_setup")]
-    partial class first_setup
+    [Migration("20250504165320_first_Setup")]
+    partial class first_Setup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,8 @@ namespace Infrastructrure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idParticipant"));
+
                     b.Property<bool>("activityStatus")
                         .HasColumnType("bit");
 
@@ -40,10 +42,15 @@ namespace Infrastructrure.Migrations
                     b.Property<DateTime>("connectionStart")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("idSession")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("idUser")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("idParticipant");
+
+                    b.HasIndex("idSession");
 
                     b.ToTable("Participant");
                 });
@@ -69,9 +76,6 @@ namespace Infrastructrure.Migrations
                     b.Property<DateTime?>("end_time")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("idParticipant")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("interation_count")
                         .HasColumnType("int");
 
@@ -93,8 +97,8 @@ namespace Infrastructrure.Migrations
                 {
                     b.HasOne("Domain.Entities.Session", "session")
                         .WithMany("Participants")
-                        .HasForeignKey("idParticipant")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("idSession")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("session");

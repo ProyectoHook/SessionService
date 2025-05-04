@@ -16,7 +16,7 @@ namespace WebService.Controllers
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("session")]
     public class SessionController : ControllerBase
     {
         private readonly ISessionService _sessionService;
@@ -26,7 +26,7 @@ namespace WebService.Controllers
             _sessionService = sessionService;
         }
 
-        [HttpGet("session")]
+        [HttpGet]
         public async Task<ActionResult<IList<Session>>> GetAllSessions()
         {
             var sessions = await _sessionService.GetAllSession();
@@ -37,7 +37,7 @@ namespace WebService.Controllers
             return Ok(sessions);
         }
 
-        [HttpGet("session/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Session>> GetSession(int id)
         {
             var session = await _sessionService.GetSessionById(id);
@@ -66,12 +66,13 @@ namespace WebService.Controllers
 
 
 
-        [HttpPost("session/join")]
-        [Authorize]
+        [HttpPost("join")]
+        //[Authorize]
         public async Task<IActionResult> UnirSession([FromBody] SessionRequest request)
         {
             try
             {
+                /*
                 // Obtener el ID del usuario desde el token (ya validado por middleware)
                 string? userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -79,6 +80,7 @@ namespace WebService.Controllers
                 {
                     return Unauthorized(new { message = "ID de usuario inválido en el token." });
                 }
+                */
 
                 var session = await _sessionService.GetSessionById(request.idSession);
                 if (session == null)
@@ -86,8 +88,13 @@ namespace WebService.Controllers
                     return NotFound(new { message = "Sesión no encontrada." });
                 }
 
-                session.idParticipant = userId;
-                await _sessionService.UpdateSession(session);
+                //session.idParticipant = userId;
+                //await _sessionService.UpdateSession(session);
+
+                //Cambiar Request Join
+                //Buscar el participante 
+                //Cambiar estado de participante
+
 
                 return Ok(new { message = "Usuario agregado a la sesión correctamente." });
             }
@@ -96,7 +103,9 @@ namespace WebService.Controllers
                 return StatusCode(500, new { message = "Error interno del servidor." });
             }
         }
-        [HttpPost("session/logout")]
+
+
+        [HttpPost("/logout")]
         public async Task<IActionResult> LogoutSession()
         {
             HttpContext.Session.Clear(); // Elimina todos los datos de sesión

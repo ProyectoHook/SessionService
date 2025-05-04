@@ -11,9 +11,7 @@ namespace Application.Interfaces.Services
     public interface IParticipantService
     {
         Task<Participant> CreateParticipant(Participant request);
-        Task<Participant> GetParticipantById(int id);
+        Task<Participant> GetByIdParticipant(int id);
         Task<List<Participant>> GetAllParticipants();
-
-        Task DeleteParticipant(DeleteParticipant request);
     }
 }

@@ -33,7 +33,7 @@ namespace Infrastructrure.Persistence
 
                 entity.HasOne(s => s.session)
                 .WithMany(l => l.Participants)
-                .HasForeignKey(n => n.idParticipant)
+                .HasForeignKey(n => n.idSession)
                 .OnDelete(DeleteBehavior.NoAction);
 
             });

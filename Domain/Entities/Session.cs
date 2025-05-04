@@ -10,7 +10,6 @@ namespace Domain.Entities
     {
         public int idSession { get; set; }
         public required Guid acces_code { get; set; }
-        public required Guid idParticipant { get; set; }
         public required string description { get; set; }
         public int interation_count { get; set; }
         public required bool active_status { get; set; }

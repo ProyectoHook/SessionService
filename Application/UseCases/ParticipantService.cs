@@ -28,17 +28,12 @@ namespace Application.UseCases
             throw new NotImplementedException();
         }
 
-        public Task DeleteParticipant(DeleteParticipant request)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<List<Participant>> GetAllParticipants()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Participant> GetParticipantById(int id)
+        public Task<Participant> GetByIdParticipant(int id)
         {
             throw new NotImplementedException();
         }

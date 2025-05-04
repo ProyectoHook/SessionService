@@ -23,57 +23,20 @@ namespace Application.UseCases
             _sessionCommand = sessionCommand;
         }
 
-       
-        public async Task<SessionResponse> CreateSession(SessionRequest request)
-        {
-
-            Session _session = new Session
-            {
-                acces_code = request.acces_code,
-                idParticipant = request.idParticipant,
-                description = request.description,
-                interation_count = request.interation_count,
-                active_status = request.active_status,
-                max_participants = request.max_participants,
-                start_time = request.start_time,
-                end_time = request.end_time,    
-                presentation_id = request.presentation_id,
-            };
-
-            await _sessionCommand.Create(_session);
-
-            SessionResponse sessionResponse = new SessionResponse
-            {
-                idSession = _session.idSession,
-                acces_code = _session.acces_code,
-                idParticipant = _session.idParticipant,
-                description = _session.description,
-                interation_count = _session.interation_count,
-                active_status = _session.active_status,
-                max_participants = _session.max_participants,
-                start_time = _session.start_time,
-                end_time = _session.end_time,
-                presentation_id = _session.presentation_id,
-            };
-
-            return sessionResponse;
-        }
-
-        public Task<List<Session>> GetAllSession()
+        public Task<SessionResponse> CloseSession(SessionRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Session> GetSessionById(int id)
+        public Task<SessionResponse> CreateSession(SessionRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public async Task UpdateSession(Session session)
+        public Task<List<Session>> GetAllSessions()
         {
-            await _sessionCommand.Update(session);
+            throw new NotImplementedException();
         }
-
     }
 }
 

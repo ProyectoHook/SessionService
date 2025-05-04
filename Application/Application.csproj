@@ -8,11 +8,12 @@
 
   <ItemGroup>
     <Compile Remove="Interfaces\IMappers\**" />
-    <Compile Remove="Mappers\**" />
     <EmbeddedResource Remove="Interfaces\IMappers\**" />
-    <EmbeddedResource Remove="Mappers\**" />
     <None Remove="Interfaces\IMappers\**" />
-    <None Remove="Mappers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
   </ItemGroup>
 
   <ItemGroup>

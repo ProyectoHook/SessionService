@@ -10,6 +10,7 @@ using System.Text;
 using Application.Interfaces.Services;
 using Application.Interfaces.Queries;
 using Application.Interfaces.Commands;
+using Application.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
+var key = Encoding.ASCII.GetBytes("abcdefghijklmnopqrstuvwxyz123456");
 
 builder.Services.AddScoped<ISessionCommand, SessionCommand>();
 builder.Services.AddScoped<ISessionQuery, SessionQuery>();
@@ -29,6 +31,9 @@ builder.Services.AddScoped<IParticipantCommand, ParticipantCommand>();
 builder.Services.AddScoped<IParticipantQuery, ParticipantQuery>();
 builder.Services.AddScoped<IParticipantService, ParticipantService>();
 
+//Mapper
+builder.Services.AddAutoMapper(typeof(Mapping));
+
 //habilita sesiones
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -37,22 +42,26 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = true;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        var jwt = builder.Configuration.GetSection("Jwt");
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwt["Issuer"],
-            ValidAudience = jwt["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwt["Key"]!))
-        };
-    });
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 var app = builder.Build();
 
