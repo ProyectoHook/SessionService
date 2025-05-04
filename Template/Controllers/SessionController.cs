@@ -26,6 +26,7 @@ namespace WebService.Controllers
             _sessionService = sessionService;
         }
 
+        /*
         [HttpGet]
         public async Task<ActionResult<IList<Session>>> GetAllSessions()
         {
@@ -80,7 +81,7 @@ namespace WebService.Controllers
                 {
                     return Unauthorized(new { message = "ID de usuario inválido en el token." });
                 }
-                */
+               
 
                 var session = await _sessionService.GetSessionById(request.idSession);
                 if (session == null)
@@ -116,5 +117,6 @@ namespace WebService.Controllers
             return Ok(new { message = "Sesión finalizada correctamente." });
         }
 
+ */
     }
 }

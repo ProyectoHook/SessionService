@@ -23,9 +23,19 @@ namespace Application.UseCases
             _participantQuery = participantQuery;
         }
 
-        public Task<Participant> CreateParticipant(Participant request)
+        public async Task<bool> CreateParticipant(CreateParticipantRequest request)
         {
-            throw new NotImplementedException();
+            var participant = new Domain.Entities.Participant()
+            { 
+            idUser = request.idUser,
+            connectionStart = DateTime.Now,
+            activityStatus = true,
+            connectionId = request.connectionId,
+            idSession = request.idSession
+            };
+
+            await _participantCommand.Create(participant);
+            return true;
         }
 
         public Task<List<Participant>> GetAllParticipants()

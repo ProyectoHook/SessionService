@@ -10,7 +10,7 @@ namespace Application.Interfaces.Services
 {
     public interface IParticipantService
     {
-        Task<Participant> CreateParticipant(Participant request);
+        Task<bool> CreateParticipant(CreateParticipantRequest request);
         Task<Participant> GetByIdParticipant(int id);
         Task<List<Participant>> GetAllParticipants();
     }
