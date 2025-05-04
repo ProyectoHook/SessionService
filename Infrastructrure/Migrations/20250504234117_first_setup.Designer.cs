@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructrure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250504231957_first_setup")]
+    [Migration("20250504234117_first_setup")]
     partial class first_setup
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace Infrastructrure.Migrations
                     b.Property<bool>("activityStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("connectionId")
+                    b.Property<int?>("connectionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("connectionStart")

@@ -41,7 +41,7 @@ namespace Infrastructrure.Migrations
                     idUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     connectionStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     activityStatus = table.Column<bool>(type: "bit", nullable: false),
-                    connectionId = table.Column<int>(type: "int", nullable: false),
+                    connectionId = table.Column<int>(type: "int", nullable: true),
                     idSession = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
