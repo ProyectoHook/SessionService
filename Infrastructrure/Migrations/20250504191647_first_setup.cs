@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructrure.Migrations
 {
     /// <inheritdoc />
-    public partial class first_Setup : Migration
+    public partial class first_setup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace Infrastructrure.Migrations
                 {
                     idSession = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    acces_code = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    acces_code = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     interation_count = table.Column<int>(type: "int", nullable: false),
                     active_status = table.Column<bool>(type: "bit", nullable: false),

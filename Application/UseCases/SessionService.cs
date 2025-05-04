@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Interfaces.Commands;
+﻿using Application.Interfaces.Commands;
 using Application.Interfaces.Queries;
 using Application.Interfaces.Services;
 using Application.Request;
@@ -23,14 +18,33 @@ namespace Application.UseCases
             _sessionCommand = sessionCommand;
         }
 
-        public Task<SessionResponse> CloseSession(SessionRequest request)
+        public Task<CreateSessionResponse> CloseSession(SessionRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SessionResponse> CreateSession(SessionRequest request)
+
+        public async Task<CreateSessionResponse> CreateSession(CreateSessionRequest request)
         {
-            throw new NotImplementedException();
+            var _accesCode = Guid.NewGuid();
+            var _session = new Session
+            {
+                acces_code = _accesCode,
+                description = request.description,
+                interation_count = 0,
+                active_status = true,
+                max_participants = request.max_participants,
+                start_time = DateTime.Now,
+                presentation_id = request.presentation_id
+            };
+            await _sessionCommand.Create(_session);
+
+            CreateSessionResponse response = new CreateSessionResponse()
+            {
+                idSession = _session.idSession,
+                acces_code = _session.acces_code
+            };
+            return response;
         }
 
         public Task<List<Session>> GetAllSessions()
