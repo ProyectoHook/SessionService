@@ -1,6 +1,8 @@
-﻿using Application.Interfaces.Services;
+﻿using Application.Exceptions;
+using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
+using Application.UseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +58,22 @@ namespace Template.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GetParticipantResponse>> GetByIdParticipant(int id)
+        {
+            try { 
+            var participant = await _participantService.GetByIdParticipant(id);
+            return Ok(participant);
+            }
+            catch(ExceptionBadRequest ex)
+            {
+                return NotFound(new { message = ex.Message });               
+            }
+            
         }
 
     }

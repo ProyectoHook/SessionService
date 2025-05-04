@@ -1,4 +1,5 @@
 ﻿using Application.Request;
+using Application.Response;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Application.Interfaces.Services
     public interface IParticipantService
     {
         Task<bool> CreateParticipant(CreateParticipantRequest request);
-        Task<Participant> GetByIdParticipant(int id);
-        Task<List<Participant>> GetAllParticipants();
+        Task<GetParticipantResponse> GetByIdParticipant(int id);
+        Task<List<GetParticipantResponse>> GetAllParticipants();
     }
 }

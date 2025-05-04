@@ -3,9 +3,11 @@ using Application.Interfaces.Commands;
 using Application.Interfaces.Queries;
 using Application.Interfaces.Services;
 using Application.Request;
+using Application.Response;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,14 +40,26 @@ namespace Application.UseCases
             return true;
         }
 
-        public Task<List<Participant>> GetAllParticipants()
+        public Task<List<GetParticipantResponse>> GetAllParticipants()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Participant> GetByIdParticipant(int id)
+        public async Task<GetParticipantResponse> GetByIdParticipant(int id)
         {
-            throw new NotImplementedException();
+            var result = await _participantQuery.GetById(id);
+            if (result == null) { throw new ExceptionBadRequest("Participante no encontrado."); }
+            var participant = new GetParticipantResponse()
+            {
+                activityStatus = result.activityStatus,
+                connectionId = result.connectionId,
+                idSession = result.idSession,
+                idParticipant = result.idParticipant,
+                connectionStart = result.connectionStart,
+                idUser = result.idUser,
+            };   
+
+            return participant;
         }
     }
 }
