@@ -20,34 +20,10 @@ namespace Template.Controllers
             _participantService = participantService;
         }
 
-        /*
-        [HttpGet]
-        public async Task<ActionResult<IList<Session>>> GetAllSessions()
-        {
-            var sessions = await _sessionService.GetAllSession();
-            if (sessions == null || sessions.Count == 0)
-            {
-                return NotFound(new { message = "No se encontraron sesiones." });
-            }
-            return Ok(sessions);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Session>> GetSession(int id)
-        {
-            var session = await _sessionService.GetSessionById(id);
-            if (session == null)
-            {
-                return NotFound(new { message = "Sesión no encontrada." });
-            }
-            return Ok(session);
-        }
-        */
-
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateParticipant([FromBody]CreateParticipantRequest request)
+        public async Task<IActionResult> CreateParticipant([FromBody] CreateParticipantRequest request)
         {
             try
             {
@@ -65,15 +41,31 @@ namespace Template.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetParticipantResponse>> GetByIdParticipant(int id)
         {
-            try { 
-            var participant = await _participantService.GetByIdParticipant(id);
-            return Ok(participant);
+            try {
+                var participant = await _participantService.GetByIdParticipant(id);
+                return Ok(participant);
             }
-            catch(ExceptionBadRequest ex)
+            catch (ExceptionNotFound ex)
             {
-                return NotFound(new { message = ex.Message });               
+                return NotFound(new { message = ex.Message });
             }
-            
+
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<List<GetParticipantResponse>>> GetAllParticipants()
+        {
+            try
+            {
+                var participants = await _participantService.GetAllParticipants();
+                return Ok(participants);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
         }
 
     }

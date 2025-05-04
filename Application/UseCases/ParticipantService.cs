@@ -40,15 +40,34 @@ namespace Application.UseCases
             return true;
         }
 
-        public Task<List<GetParticipantResponse>> GetAllParticipants()
+        public async Task<List<GetParticipantResponse>> GetAllParticipants()
         {
-            throw new NotImplementedException();
+            var results = await _participantQuery.GetAll();
+
+            List<GetParticipantResponse> participants = new List<GetParticipantResponse>();
+
+            foreach (var result in results) 
+            {
+                var temp = new GetParticipantResponse() 
+                {
+                    activityStatus = result.activityStatus,
+                    connectionId = result.connectionId,
+                    idSession = result.idSession,
+                    idParticipant = result.idParticipant,
+                    connectionStart = result.connectionStart,
+                    idUser = result.idUser,
+                };
+
+                participants.Add(temp);
+            }
+
+            return participants;
         }
 
         public async Task<GetParticipantResponse> GetByIdParticipant(int id)
         {
             var result = await _participantQuery.GetById(id);
-            if (result == null) { throw new ExceptionBadRequest("Participante no encontrado."); }
+            if (result == null) { throw new ExceptionNotFound("Participante no encontrado."); }
             var participant = new GetParticipantResponse()
             {
                 activityStatus = result.activityStatus,
