@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructrure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250504165320_first_Setup")]
-    partial class first_Setup
+    [Migration("20250504191647_first_setup")]
+    partial class first_setup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,7 +63,7 @@ namespace Infrastructrure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idSession"));
 
-                    b.Property<Guid>("acces_code")
+                    b.Property<Guid?>("acces_code")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("active_status")

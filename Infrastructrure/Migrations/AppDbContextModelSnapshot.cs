@@ -60,7 +60,7 @@ namespace Infrastructrure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idSession"));
 
-                    b.Property<Guid>("acces_code")
+                    b.Property<Guid?>("acces_code")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("active_status")
