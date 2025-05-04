@@ -1,43 +1,70 @@
-using Application.Interfaces;
-using Application.Interfaces.IMappers;
-using Application.Mappers;
 using Application.UseCases;
 using Infrastructrure.Command;
 using Infrastructrure.Persistence;
 using Infrastructrure.Query;
+using JWT.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Application.Interfaces.Services;
+using Application.Interfaces.Queries;
+using Application.Interfaces.Commands;
+using Application.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration["ConnectionString"];
-builder.Services.AddDbContext<TemplateContext>(options => options.UseSqlServer(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<IGenericoMapper, GenericoMapper>();
+var key = Encoding.ASCII.GetBytes("abcdefghijklmnopqrstuvwxyz123456");
 
-builder.Services.AddScoped<IGeneroCommand,GeneroCommand>();
-builder.Services.AddScoped<IGeneroQuery, GeneroQuery>();
-builder.Services.AddScoped<IGeneroService, GeneroService>();
+builder.Services.AddScoped<ISessionCommand, SessionCommand>();
+builder.Services.AddScoped<ISessionQuery, SessionQuery>();
+builder.Services.AddScoped<ISessionService, SessionService>();
 
-builder.Services.AddScoped<IArtistaCommand,ArtistaCommand>();
-builder.Services.AddScoped<IArtistaQuery,ArtistaQuery>();
-builder.Services.AddScoped<IArtistaService,ArtistaService>();
+builder.Services.AddScoped<IParticipantCommand, ParticipantCommand>();
+builder.Services.AddScoped<IParticipantQuery, ParticipantQuery>();
+builder.Services.AddScoped<IParticipantService, ParticipantService>();
 
-builder.Services.AddScoped<IAlbumCommand,AlbumCommand>();
-builder.Services.AddScoped<IAlbumQuery,AlbumQuery>();
-builder.Services.AddScoped<IAlbumService,AlbumService>();
-builder.Services.AddScoped<IAlbumMapper,AlbumMapper>();
+//Mapper
+builder.Services.AddAutoMapper(typeof(Mapping));
 
+//habilita sesiones
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = true;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -46,7 +73,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+//ativa sesiones
+app.UseSession();
 
 app.MapControllers();
 
