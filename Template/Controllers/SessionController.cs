@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Application.Exceptions;
 using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
@@ -43,18 +44,19 @@ namespace WebService.Controllers
 
         }
 
-        /*
-        [HttpPost("/logout")]
-        public async Task<IActionResult> LogoutSession()
+        
+        [HttpPost("/logout{id}")]
+        public async Task<IActionResult> LogoutSession(int id)
         {
-            HttpContext.Session.Clear(); // Elimina todos los datos de sesión
-
-            // si se usa autenticación basada en cookies
-            await HttpContext.SignOutAsync();
+            try 
+            {
+                await _sessionService.EndSession(id);
+            }
+            catch (ExceptionNotFound ex) { return BadRequest(ex.Message); }
 
             return Ok(new { message = "Sesión finalizada correctamente." });
         }
-        */
+        
 
         [HttpGet]
         [ProducesResponseType(typeof(List<GetSessionResponse>), 200)]

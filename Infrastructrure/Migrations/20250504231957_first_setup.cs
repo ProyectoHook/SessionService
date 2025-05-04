@@ -24,7 +24,8 @@ namespace Infrastructrure.Migrations
                     max_participants = table.Column<int>(type: "int", nullable: false),
                     start_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     end_time = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    presentation_id = table.Column<int>(type: "int", nullable: false)
+                    presentation_id = table.Column<int>(type: "int", nullable: false),
+                    created_by = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

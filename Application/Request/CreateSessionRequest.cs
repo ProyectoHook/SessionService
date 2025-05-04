@@ -12,5 +12,7 @@ namespace Application.Request
         public string description { get; set; }
         public int max_participants { get; set; }
         public int presentation_id { get; set; }
+
+        public int user_id { get; set; }
     }
 }

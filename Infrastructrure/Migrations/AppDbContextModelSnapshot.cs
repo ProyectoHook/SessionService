@@ -66,6 +66,9 @@ namespace Infrastructrure.Migrations
                     b.Property<bool>("active_status")
                         .HasColumnType("bit");
 
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
