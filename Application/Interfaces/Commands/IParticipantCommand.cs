@@ -9,9 +9,11 @@ namespace Application.Interfaces.Commands
 {
     public interface IParticipantCommand
     {
-        Task<Participant> CreateSession_activity(Participant session);
+        Task<Participant> Create(Participant participant);
           
-        Task Delete(Participant session);
+        Task Delete(Participant participant);
+
+        Task Update(Participant participant);
 
     }
 }

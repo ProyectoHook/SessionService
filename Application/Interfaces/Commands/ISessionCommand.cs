@@ -9,8 +9,11 @@ namespace Application.Interfaces.Commands
 {
     public interface ISessionCommand
     {
-        Task<Session> CreateSession(Session request);
-        Task UpdateSession(Session session);
-        
+        Task<Session> Create(Session request);
+
+        Task Update(Session session);
+
+        Task Delete(Session session);
+
     }
 }

@@ -10,10 +10,10 @@ namespace Application.Interfaces.Services
 {
     public interface IParticipantService
     {
-        Task<Participant> CreateSession_activity(Participant request);
-        Task<Participant> GetSession_activityById(int id);
-        Task<List<Participant>> GetAllSession_activity();
+        Task<Participant> CreateParticipant(Participant request);
+        Task<Participant> GetParticipantById(int id);
+        Task<List<Participant>> GetAllParticipants();
 
-        Task Delete(DeleteParticipant request);
+        Task DeleteParticipant(DeleteParticipant request);
     }
 }

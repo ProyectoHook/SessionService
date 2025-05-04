@@ -23,26 +23,24 @@ namespace Application.UseCases
             _participantQuery = participantQuery;
         }
 
-        public Task<Participant> CreateSession_activity(Participant request)
+        public Task<Participant> CreateParticipant(Participant request)
         {
             throw new NotImplementedException();
         }
 
-        public Task Delete(DeleteParticipant request)
-        {
-            //
-            return null;
-        }
-
-        public Task<List<Participant>> GetAllSession_activity()
+        public Task DeleteParticipant(DeleteParticipant request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Participant> GetSession_activityById(int id)
+        public Task<List<Participant>> GetAllParticipants()
         {
             throw new NotImplementedException();
         }
 
+        public Task<Participant> GetParticipantById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

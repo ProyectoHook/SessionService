@@ -26,8 +26,8 @@ namespace WebService.Controllers
             _sessionService = sessionService;
         }
 
-        [HttpGet("sessions")]
-        public async Task<ActionResult<IList<Session>>> GetAllSession()
+        [HttpGet("session")]
+        public async Task<ActionResult<IList<Session>>> GetAllSessions()
         {
             var sessions = await _sessionService.GetAllSession();
             if (sessions == null || sessions.Count == 0)
@@ -66,7 +66,7 @@ namespace WebService.Controllers
 
 
 
-        [HttpPost("join-session")]
+        [HttpPost("session/join")]
         [Authorize]
         public async Task<IActionResult> UnirSession([FromBody] SessionRequest request)
         {
@@ -96,7 +96,7 @@ namespace WebService.Controllers
                 return StatusCode(500, new { message = "Error interno del servidor." });
             }
         }
-        [HttpPost("logout")]
+        [HttpPost("session/logout")]
         public async Task<IActionResult> LogoutSession()
         {
             HttpContext.Session.Clear(); // Elimina todos los datos de sesión

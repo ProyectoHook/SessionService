@@ -20,7 +20,7 @@ namespace Infrastructrure.Command
             _context = context;
         }
 
-        public async Task<Participant> CreateSession_activity(Participant participant)
+        public async Task<Participant> Create(Participant participant)
         {
             _context.Participant.AddAsync(participant);
             await _context.SaveChangesAsync();
@@ -33,5 +33,9 @@ namespace Infrastructrure.Command
             await _context.SaveChangesAsync();
         }
 
+        public Task Update(Participant participant)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

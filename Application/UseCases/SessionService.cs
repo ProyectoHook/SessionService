@@ -23,14 +23,7 @@ namespace Application.UseCases
             _sessionCommand = sessionCommand;
         }
 
-        public async Task<List<Session>> GetAllSession()
-        {
-            return await _sessionQuery.GetAllSession();
-        }
-        public async Task<Session> GetSessionById(int id)
-        {
-            return await _sessionQuery.GetSessionById(id);
-        }
+       
         public async Task<SessionResponse> CreateSession(SessionRequest request)
         {
 
@@ -47,7 +40,7 @@ namespace Application.UseCases
                 presentation_id = request.presentation_id,
             };
 
-            await _sessionCommand.CreateSession(_session);
+            await _sessionCommand.Create(_session);
 
             SessionResponse sessionResponse = new SessionResponse
             {
@@ -65,9 +58,20 @@ namespace Application.UseCases
 
             return sessionResponse;
         }
+
+        public Task<List<Session>> GetAllSession()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Session> GetSessionById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateSession(Session session)
         {
-            await _sessionCommand.UpdateSession(session);
+            await _sessionCommand.Update(session);
         }
 
     }

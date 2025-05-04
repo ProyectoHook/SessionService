@@ -20,13 +20,19 @@ namespace Infrastructrure.Command
             _context = context;
         }
 
-        public async Task<Session> CreateSession(Session session)
+        public async Task<Session> Create(Session session)
         {
             _context.Session.AddAsync(session);
             await _context.SaveChangesAsync();
             return session;
         }
-        public async Task UpdateSession(Session session)
+
+        public Task Delete(Session session)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task Update(Session session)
         {
             _context.Session.Update(session);
             await _context.SaveChangesAsync();

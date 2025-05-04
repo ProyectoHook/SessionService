@@ -9,7 +9,7 @@ namespace Application.Interfaces.Queries
 {
     public interface IParticipantQuery
     {
-        Task<Participant> GetSession_activityById(int id);
-        Task<List<Participant>> GetAllSession_activity();
+        Task<Participant> GetById(int id);
+        Task<List<Participant>> GetAll();
     }
 }

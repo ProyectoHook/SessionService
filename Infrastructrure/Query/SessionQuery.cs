@@ -20,12 +20,12 @@ namespace Infrastructrure.Query
             _context = context;
         }
 
-        public async Task<List<Session>> GetAllSession()
+        public async Task<List<Session>> GetAll()
         {
             return await _context.Session.ToListAsync();
         }
 
-        public async Task<Session> GetSessionById(int id)
+        public async Task<Session> GetById(int id)
         {
             return await _context.Session.FindAsync(id);
         }
