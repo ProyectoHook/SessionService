@@ -13,7 +13,7 @@ namespace Application.Interfaces.Services
     {
         Task<CreateSessionResponse> CreateSession(CreateSessionRequest request);
         Task<CreateSessionResponse> CloseSession(SessionRequest request);
-        Task<List<Session>> GetAllSessions();
+        Task<List<GetSessionResponse>> GetAllSessions();
 
     }
 }

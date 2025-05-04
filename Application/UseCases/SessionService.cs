@@ -47,9 +47,29 @@ namespace Application.UseCases
             return response;
         }
 
-        public Task<List<Session>> GetAllSessions()
+        public async Task<List<GetSessionResponse>> GetAllSessions()
         {
-            throw new NotImplementedException();
+            var results = await _sessionQuery.GetAll();
+
+            List<GetSessionResponse> response = new List<GetSessionResponse>();
+
+            foreach (var result in results)
+            {
+                var temp = new GetSessionResponse()
+                {
+                    idSession = result.idSession,
+                    acces_code = result.acces_code,
+                    description = result.description,
+                    interation_count = result.interation_count,
+                    active_status = result.active_status,
+                    max_participants = result.max_participants,
+                    start_time = result.start_time,
+                    presentation_id = result.presentation_id
+                };
+                response.Add(temp);
+            }
+
+            return response;
         }
     }
 }

@@ -55,5 +55,20 @@ namespace WebService.Controllers
             return Ok(new { message = "Sesión finalizada correctamente." });
         }
         */
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<GetSessionResponse>), 200)]
+        public async Task<ActionResult<GetSessionResponse>> GetAll()
+        {
+            try
+            {
+                var result = await _sessionService.GetAllSessions();
+                return Ok(result); // Devuelve 200 OK
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
