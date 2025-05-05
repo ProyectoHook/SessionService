@@ -45,7 +45,7 @@ namespace WebService.Controllers
         }
 
         
-        [HttpPost("/logout{id}")]
+        [HttpPost("logout/{id}")]
         public async Task<IActionResult> LogoutSession(int id)
         {
             try 

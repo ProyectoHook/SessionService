@@ -8,7 +8,7 @@ namespace Infrastructrure.Migrations
     /// <inheritdoc />
     public partial class first_setup : Migration
     {
-        /// <inheritdoc />
+        /// <inheritdoc />update
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
