@@ -17,7 +17,7 @@ namespace WebService.Controllers
 {
 
     [ApiController]
-    [Route("session")]
+    [Route("api/v1/session")]
     public class SessionController : ControllerBase
     {
         private readonly ISessionService _sessionService;
@@ -28,7 +28,7 @@ namespace WebService.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(typeof(CreateSessionResponse), 201)]
         public async Task<IActionResult> CreateSession(CreateSessionRequest request)
         {
@@ -58,7 +58,7 @@ namespace WebService.Controllers
         }
         
 
-        [HttpGet]
+        [HttpGet("getAll")]
         [ProducesResponseType(typeof(List<GetSessionResponse>), 200)]
         public async Task<ActionResult<GetSessionResponse>> GetAll()
         {
