@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces;
-using Application.Interfaces.InterfaceSession;
+using Application.Interfaces.Queries;
 using Domain.Entities;
 using Infrastructrure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +13,21 @@ namespace Infrastructrure.Query
 {
     public class SessionQuery : ISessionQuery
     {
-        public Task<List<Session>> GetAllSession()
+        private readonly AppDbContext _context;
+
+        public SessionQuery(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Session> GetSessionById(int id)
+        public async Task<List<Session>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Session.ToListAsync();
+        }
+
+        public async Task<Session> GetById(int id)
+        {
+            return await _context.Session.FindAsync(id);
         }
     }
 }

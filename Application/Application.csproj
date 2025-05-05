@@ -7,14 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <Compile Remove="Interfaces\IMappers\**" />
+    <EmbeddedResource Remove="Interfaces\IMappers\**" />
+    <None Remove="Interfaces\IMappers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\IMappers\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Request\" />
-    <Folder Include="Response\" />
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

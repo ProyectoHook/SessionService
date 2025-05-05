@@ -11,7 +11,7 @@ namespace Infrastructrure.Persistence
     public class AppDbContext : DbContext
     {
         public DbSet<Session> Session { get; set; }
-        public DbSet<Participant> session_activity { get; set; }
+        public DbSet<Participant> Participant { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -33,8 +33,8 @@ namespace Infrastructrure.Persistence
 
                 entity.HasOne(s => s.session)
                 .WithMany(l => l.Participants)
-                .HasForeignKey(n => n.idParticipant)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(n => n.idSession)
+                .OnDelete(DeleteBehavior.NoAction);
 
             });
         }

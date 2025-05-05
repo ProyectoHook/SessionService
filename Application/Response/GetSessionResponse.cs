@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
 
-namespace Domain.Entities
+namespace Application.Response
 {
-    public class Session
+    public class GetSessionResponse
     {
         public int idSession { get; set; }
         public Guid? acces_code { get; set; }
@@ -17,7 +18,6 @@ namespace Domain.Entities
         public required DateTime start_time { get; set; }
         public DateTime? end_time { get; set; }
         public required int presentation_id { get; set; }
-        public required int created_by { get; set; }
-        public IList<Participant> Participants { get; set; }
+
     }
 }

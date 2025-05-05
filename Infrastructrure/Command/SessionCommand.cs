@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces;
-using Application.Interfaces.InterfaceSession;
+using Application.Interfaces.Commands;
 using Domain.Entities;
 using Infrastructrure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +13,29 @@ namespace Infrastructrure.Command
 {
     public class SessionCommand : ISessionCommand
     {
-        public Task<Session> CreateSession(Session newSession)
+        private readonly AppDbContext _context;
+
+        public SessionCommand(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Session> Create(Session session)
+        {
+            _context.Session.AddAsync(session);
+            await _context.SaveChangesAsync();
+            return session;
+        }
+
+        public Task Delete(Session session)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Session> UpdateSession(Session oldSession, int id)
+        public async Task Update(Session session)
         {
-            throw new NotImplementedException();
+            _context.Session.Update(session);
+            await _context.SaveChangesAsync();
         }
     }
 }
