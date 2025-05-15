@@ -8,16 +8,30 @@ namespace Infrastructrure.Migrations
     /// <inheritdoc />
     public partial class first_setup : Migration
     {
-        /// <inheritdoc />update
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AccesCode",
+                columns: table => new
+                {
+                    idCode = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    status = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccesCode", x => x.idCode);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Session",
                 columns: table => new
                 {
                     idSession = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    acces_code = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    acces_code = table.Column<int>(type: "int", nullable: true),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     interation_count = table.Column<int>(type: "int", nullable: false),
                     active_status = table.Column<bool>(type: "bit", nullable: false),
@@ -30,6 +44,11 @@ namespace Infrastructrure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Session", x => x.idSession);
+                    table.ForeignKey(
+                        name: "FK_Session_AccesCode_acces_code",
+                        column: x => x.acces_code,
+                        principalTable: "AccesCode",
+                        principalColumn: "idCode");
                 });
 
             migrationBuilder.CreateTable(
@@ -58,6 +77,13 @@ namespace Infrastructrure.Migrations
                 name: "IX_Participant_idSession",
                 table: "Participant",
                 column: "idSession");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Session_acces_code",
+                table: "Session",
+                column: "acces_code",
+                unique: true,
+                filter: "[acces_code] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -68,6 +94,9 @@ namespace Infrastructrure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Session");
+
+            migrationBuilder.DropTable(
+                name: "AccesCode");
         }
     }
 }

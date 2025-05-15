@@ -27,6 +27,9 @@ builder.Services.AddScoped<ISessionCommand, SessionCommand>();
 builder.Services.AddScoped<ISessionQuery, SessionQuery>();
 builder.Services.AddScoped<ISessionService, SessionService>();
 
+builder.Services.AddScoped<IAccesCodeCommand, AccesCodeCommand>();
+builder.Services.AddScoped<IAccesCodeQuery, AccesCodeQuery>();
+
 builder.Services.AddScoped<IParticipantCommand, ParticipantCommand>();
 builder.Services.AddScoped<IParticipantQuery, ParticipantQuery>();
 builder.Services.AddScoped<IParticipantService, ParticipantService>();

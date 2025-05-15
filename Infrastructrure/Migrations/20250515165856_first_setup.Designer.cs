@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructrure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250504234117_first_setup")]
+    [Migration("20250515165856_first_setup")]
     partial class first_setup
     {
         /// <inheritdoc />
@@ -24,6 +24,26 @@ namespace Infrastructrure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Domain.Entities.AccesCode", b =>
+                {
+                    b.Property<int>("idCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idCode"));
+
+                    b.Property<string>("code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("idCode");
+
+                    b.ToTable("AccesCode");
+                });
 
             modelBuilder.Entity("Domain.Entities.Participant", b =>
                 {
@@ -63,8 +83,8 @@ namespace Infrastructrure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idSession"));
 
-                    b.Property<Guid?>("acces_code")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("acces_code")
+                        .HasColumnType("int");
 
                     b.Property<bool>("active_status")
                         .HasColumnType("bit");
@@ -93,6 +113,10 @@ namespace Infrastructrure.Migrations
 
                     b.HasKey("idSession");
 
+                    b.HasIndex("acces_code")
+                        .IsUnique()
+                        .HasFilter("[acces_code] IS NOT NULL");
+
                     b.ToTable("Session");
                 });
 
@@ -105,6 +129,22 @@ namespace Infrastructrure.Migrations
                         .IsRequired();
 
                     b.Navigation("session");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Session", b =>
+                {
+                    b.HasOne("Domain.Entities.AccesCode", "AccesCode")
+                        .WithOne("Session")
+                        .HasForeignKey("Domain.Entities.Session", "acces_code")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("AccesCode");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccesCode", b =>
+                {
+                    b.Navigation("Session")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Session", b =>

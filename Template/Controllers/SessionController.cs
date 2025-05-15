@@ -53,6 +53,7 @@ namespace WebService.Controllers
                 await _sessionService.EndSession(id);
             }
             catch (ExceptionNotFound ex) { return BadRequest(ex.Message); }
+            catch (ExceptionBadRequest ex) { return BadRequest(ex.Message); }
 
             return Ok(new { message = "Sesión finalizada correctamente." });
         }
