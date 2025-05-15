@@ -17,7 +17,7 @@ namespace Domain.Entities
         public required DateTime start_time { get; set; }
         public DateTime? end_time { get; set; }
         public required int presentation_id { get; set; }
-
+        public required int created_by { get; set; }
         public IList<Participant> Participants { get; set; }
     }
 }

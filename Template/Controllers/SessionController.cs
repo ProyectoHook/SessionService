@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Application.Exceptions;
 using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
@@ -16,7 +17,7 @@ namespace WebService.Controllers
 {
 
     [ApiController]
-    [Route("session")]
+    [Route("api/v1/session")]
     public class SessionController : ControllerBase
     {
         private readonly ISessionService _sessionService;
@@ -27,7 +28,7 @@ namespace WebService.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(typeof(CreateSessionResponse), 201)]
         public async Task<IActionResult> CreateSession(CreateSessionRequest request)
         {
@@ -43,20 +44,21 @@ namespace WebService.Controllers
 
         }
 
-        /*
-        [HttpPost("/logout")]
-        public async Task<IActionResult> LogoutSession()
+        
+        [HttpPost("logout/{id}")]
+        public async Task<IActionResult> LogoutSession(int id)
         {
-            HttpContext.Session.Clear(); // Elimina todos los datos de sesión
-
-            // si se usa autenticación basada en cookies
-            await HttpContext.SignOutAsync();
+            try 
+            {
+                await _sessionService.EndSession(id);
+            }
+            catch (ExceptionNotFound ex) { return BadRequest(ex.Message); }
 
             return Ok(new { message = "Sesión finalizada correctamente." });
         }
-        */
+        
 
-        [HttpGet]
+        [HttpGet("getAll")]
         [ProducesResponseType(typeof(List<GetSessionResponse>), 200)]
         public async Task<ActionResult<GetSessionResponse>> GetAll()
         {

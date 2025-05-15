@@ -13,7 +13,7 @@ namespace Application.Response
         public required Guid idUser { get; set; }
         public required DateTime connectionStart { get; set; }
         public required bool activityStatus { get; set; }
-        public required int connectionId { get; set; }
+        public int? connectionId { get; set; }
         public int  idSession { get; set; }
     }
 }

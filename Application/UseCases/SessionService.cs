@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Commands;
+﻿using Application.Exceptions;
+using Application.Interfaces.Commands;
 using Application.Interfaces.Queries;
 using Application.Interfaces.Services;
 using Application.Request;
@@ -18,9 +19,17 @@ namespace Application.UseCases
             _sessionCommand = sessionCommand;
         }
 
-        public Task<CreateSessionResponse> CloseSession(SessionRequest request)
+        public async Task<bool> EndSession(int id)
         {
-            throw new NotImplementedException();
+            var result = await _sessionQuery.GetById(id);
+
+            if (result == null) { throw new ExceptionNotFound("Session no encontrada"); }
+
+            result.active_status = false;
+
+            await _sessionCommand.Update(result);
+            
+            return true;
         }
 
 
@@ -35,7 +44,10 @@ namespace Application.UseCases
                 active_status = true,
                 max_participants = request.max_participants,
                 start_time = DateTime.Now,
-                presentation_id = request.presentation_id
+                presentation_id = request.presentation_id,
+                created_by = request.user_id
+
+                
             };
             await _sessionCommand.Create(_session);
 

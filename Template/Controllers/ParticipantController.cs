@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Template.Controllers
 {
     [ApiController]
-    [Route("participant")]
+    [Route("api/v1/participant")]
     public class ParticipantController : ControllerBase
     {
         private readonly IParticipantService _participantService;
@@ -20,7 +20,7 @@ namespace Template.Controllers
             _participantService = participantService;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateParticipant([FromBody] CreateParticipantRequest request)
@@ -36,7 +36,7 @@ namespace Template.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("getById/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetParticipantResponse>> GetByIdParticipant(int id)
@@ -52,7 +52,7 @@ namespace Template.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         [ProducesResponseType(200)]
         public async Task<ActionResult<List<GetParticipantResponse>>> GetAllParticipants()
         {

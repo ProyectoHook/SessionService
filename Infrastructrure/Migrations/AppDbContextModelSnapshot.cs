@@ -33,7 +33,7 @@ namespace Infrastructrure.Migrations
                     b.Property<bool>("activityStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("connectionId")
+                    b.Property<int?>("connectionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("connectionStart")
@@ -65,6 +65,9 @@ namespace Infrastructrure.Migrations
 
                     b.Property<bool>("active_status")
                         .HasColumnType("bit");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
 
                     b.Property<string>("description")
                         .IsRequired()

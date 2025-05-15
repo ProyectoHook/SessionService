@@ -18,21 +18,31 @@ namespace Application.UseCases
     {
         private readonly IParticipantCommand _participantCommand;
         private readonly IParticipantQuery _participantQuery;
+        private readonly ISessionQuery _sessionQuery;
 
-        public ParticipantService(IParticipantCommand participantCommand, IParticipantQuery participantQuery)
+        public ParticipantService(IParticipantCommand participantCommand, IParticipantQuery participantQuery, ISessionQuery sessionQuery)
         {
             _participantCommand = participantCommand;
             _participantQuery = participantQuery;
+            _sessionQuery = sessionQuery;
         }
 
         public async Task<bool> CreateParticipant(CreateParticipantRequest request)
         {
+            var sesion_id = request.idSession;
+            var sesion_db = await _sessionQuery.GetById(sesion_id);
+            
+            //Comprobación de la existencia de la sesión
+            if (sesion_db == null) { throw new ExceptionNotFound("Sesión no encontrada"); }
+
+            //Comprobación del estado de la sesión
+            if (sesion_db.active_status == false) { throw new ExceptionBadRequest("La sesión no se encuentra activa"); }
+
             var participant = new Domain.Entities.Participant()
             { 
             idUser = request.idUser,
             connectionStart = DateTime.Now,
             activityStatus = true,
-            connectionId = request.connectionId,
             idSession = request.idSession
             };
 
