@@ -38,6 +38,11 @@ namespace Application.UseCases
             //Comprobación del estado de la sesión
             if (sesion_db.active_status == false) { throw new ExceptionBadRequest("La sesión no se encuentra activa"); }
 
+            //Comprobar que el mismo usuario no se vuelva a unir
+            var users = await _participantQuery.GetAll();
+            users = users.Where(c => c.idUser == request.idUser).ToList();
+            if (users.Count > 0) { throw new ExceptionBadRequest("El usuario ya se encuentra en la sesión"); }
+
             var participant = new Domain.Entities.Participant()
             { 
             idUser = request.idUser,

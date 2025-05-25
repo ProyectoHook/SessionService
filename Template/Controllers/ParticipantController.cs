@@ -5,6 +5,7 @@ using Application.Response;
 using Application.UseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Template.Controllers
@@ -21,6 +22,7 @@ namespace Template.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateParticipant([FromBody] CreateParticipantRequest request)
@@ -37,6 +39,7 @@ namespace Template.Controllers
         }
 
         [HttpGet("getById/{id}")]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetParticipantResponse>> GetByIdParticipant(int id)
@@ -53,6 +56,7 @@ namespace Template.Controllers
         }
 
         [HttpGet("GetAll")]
+        [Authorize]
         [ProducesResponseType(200)]
         public async Task<ActionResult<List<GetParticipantResponse>>> GetAllParticipants()
         {

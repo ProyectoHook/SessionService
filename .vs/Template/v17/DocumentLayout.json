@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\application\\usecases\\sessionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|solutionrelative:application\\usecases\\sessionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\application\\usecases\\participantservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|solutionrelative:application\\usecases\\participantservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\template\\controllers\\participantcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|solutionrelative:template\\controllers\\participantcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\template\\controllers\\sessioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|solutionrelative:template\\controllers\\sessioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\template\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|solutionrelative:template\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -11,28 +27,12 @@
       "RelativeMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|solutionrelative:template\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\template\\controllers\\sessioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|solutionrelative:template\\controllers\\sessioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\application\\request\\createsessionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|solutionrelative:application\\request\\createsessionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\template\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|solutionrelative:template\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\template\\controllers\\participantcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EFCD7A8-C73C-4F77-9862-2DE4D0EBE384}|Template\\Template.csproj|solutionrelative:template\\controllers\\participantcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\application\\usecases\\sessionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|solutionrelative:application\\usecases\\sessionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\application\\usecases\\participantservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F14C687-8806-423F-BBF4-06D6A86894C2}|Application\\Application.csproj|solutionrelative:application\\usecases\\participantservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F5F82D3E-9CC4-4B56-8C3A-693AF54E15AC}|Infrastructrure\\Infrastructrure.csproj|c:\\users\\maxi\\desktop\\slidex\\sessionservice\\infrastructrure\\command\\accescodecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -134,11 +134,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 18,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "CreateSessionRequest.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Application\\Request\\CreateSessionRequest.cs",
               "RelativeDocumentMoniker": "Application\\Request\\CreateSessionRequest.cs",
@@ -150,19 +150,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "SessionService.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Application\\UseCases\\SessionService.cs",
               "RelativeDocumentMoniker": "Application\\UseCases\\SessionService.cs",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Application\\UseCases\\SessionService.cs",
               "RelativeToolTip": "Application\\UseCases\\SessionService.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAwwDoAAABJAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAowDYAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T03:48:06.836Z"
+              "WhenOpened": "2025-05-04T03:48:06.836Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Program.cs",
               "RelativeDocumentMoniker": "Template\\Program.cs",
@@ -210,27 +211,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "ParticipantController.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Controllers\\ParticipantController.cs",
               "RelativeDocumentMoniker": "Template\\Controllers\\ParticipantController.cs",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Controllers\\ParticipantController.cs",
               "RelativeToolTip": "Template\\Controllers\\ParticipantController.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAowB8AAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T17:13:55.666Z"
+              "WhenOpened": "2025-05-04T17:13:55.666Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "ParticipantService.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Application\\UseCases\\ParticipantService.cs",
               "RelativeDocumentMoniker": "Application\\UseCases\\ParticipantService.cs",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Application\\UseCases\\ParticipantService.cs",
               "RelativeToolTip": "Application\\UseCases\\ParticipantService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAIBJwBQAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAgwCgAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T03:47:34.166Z"
+              "WhenOpened": "2025-05-04T03:47:34.166Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -270,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Template\\Properties\\launchSettings.json",
@@ -278,8 +281,7 @@
               "RelativeToolTip": "Template\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-04T22:04:17.38Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T22:04:17.38Z"
             },
             {
               "$type": "Document",
@@ -355,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\appsettings.json",
               "RelativeDocumentMoniker": "Template\\appsettings.json",
@@ -404,13 +406,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "SessionController.cs",
               "DocumentMoniker": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Controllers\\SessionController.cs",
               "RelativeDocumentMoniker": "Template\\Controllers\\SessionController.cs",
               "ToolTip": "C:\\Users\\Maxi\\Desktop\\SlideX\\SessionService\\Template\\Controllers\\SessionController.cs",
               "RelativeToolTip": "Template\\Controllers\\SessionController.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAwwEAAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAA9wEEAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-04T03:50:53.966Z",
               "EditorCaption": ""

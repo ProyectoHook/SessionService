@@ -67,6 +67,7 @@ namespace Application.UseCases
                 availableCode = await _accesCodeCommand.Create(availableCode);
 
             }
+
             else 
             {
                 availableCode.status = true;
