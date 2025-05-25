@@ -21,7 +21,10 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-var key = Encoding.ASCII.GetBytes("abcdefghijklmnopqrstuvwxyz123456");
+
+//JWT KEY
+var keyString = builder.Configuration["JwtSettings:SecretKey"];
+var key = Encoding.ASCII.GetBytes(keyString);
 
 builder.Services.AddScoped<ISessionCommand, SessionCommand>();
 builder.Services.AddScoped<ISessionQuery, SessionQuery>();
@@ -37,6 +40,7 @@ builder.Services.AddScoped<IParticipantService, ParticipantService>();
 //Mapper
 builder.Services.AddAutoMapper(typeof(Mapping));
 
+
 //habilita sesiones
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -46,6 +50,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+//JWT Config
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -53,7 +58,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = true;
+    options.RequireHttpsMetadata = false; // pon false si usas HTTP local
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -66,6 +71,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization();
+
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -76,6 +85,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//JWT
 app.UseAuthentication();
 app.UseAuthorization();
 

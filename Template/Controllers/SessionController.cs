@@ -29,6 +29,7 @@ namespace WebService.Controllers
 
 
         [HttpPost("create")]
+        [Authorize]
         [ProducesResponseType(typeof(CreateSessionResponse), 201)]
         public async Task<IActionResult> CreateSession(CreateSessionRequest request)
         {
@@ -46,6 +47,7 @@ namespace WebService.Controllers
 
         
         [HttpPost("logout/{id}")]
+        [Authorize]
         public async Task<IActionResult> LogoutSession(int id)
         {
             try 
@@ -60,6 +62,7 @@ namespace WebService.Controllers
         
 
         [HttpGet("getAll")]
+        [Authorize]
         [ProducesResponseType(typeof(List<GetSessionResponse>), 200)]
         public async Task<ActionResult<GetSessionResponse>> GetAll()
         {
