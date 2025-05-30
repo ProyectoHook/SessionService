@@ -14,7 +14,7 @@ namespace Domain.Entities
         public required bool activityStatus { get; set; }
         public int? connectionId { get; set; }
 
-        public required int idSession;
+        public required Guid idSession;
         public Session session { get; set; }
     }
 }

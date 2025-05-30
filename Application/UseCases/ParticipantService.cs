@@ -29,8 +29,8 @@ namespace Application.UseCases
 
         public async Task<bool> CreateParticipant(CreateParticipantRequest request)
         {
-            var sesion_id = request.idSession;
-            var sesion_db = await _sessionQuery.GetById(sesion_id);
+            //var sesion_id = request.idSession;
+            var sesion_db = await _sessionQuery.GetByAccessCode(request.access_code);
             
             //Comprobación de la existencia de la sesión
             if (sesion_db == null) { throw new ExceptionNotFound("Sesión no encontrada"); }
@@ -43,7 +43,7 @@ namespace Application.UseCases
             idUser = request.idUser,
             connectionStart = DateTime.Now,
             activityStatus = true,
-            idSession = request.idSession
+            idSession = sesion_db.idSession
             };
 
             await _participantCommand.Create(participant);

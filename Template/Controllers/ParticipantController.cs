@@ -28,7 +28,7 @@ namespace Template.Controllers
             try
             {
                 var result = await _participantService.CreateParticipant(request);
-                return Ok("Usuario ingresado a la sesión"); // Devuelve 201 Created sin contenido
+                return StatusCode(201,"Usuario ingresado a la sesión"); // Devuelve 201 Created sin contenido
             }
             catch (Exception ex)
             {

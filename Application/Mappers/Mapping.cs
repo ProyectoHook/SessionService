@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Application.Request;
+using Application.Response;
+using AutoMapper;
 
 namespace Application.Mappers
 {
@@ -6,6 +8,7 @@ namespace Application.Mappers
     {
         public Mapping() 
         {
+            CreateMap<CreateSessionResponse,CreateParticipantRequest>();
             
         }
     }

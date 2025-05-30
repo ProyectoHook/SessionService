@@ -28,5 +28,6 @@ namespace Infrastructrure.Query
         {
             return await _context.Participant.FindAsync(id);
         }
+        
     }
 }

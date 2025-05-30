@@ -25,9 +25,14 @@ namespace Infrastructrure.Query
             return await _context.Session.ToListAsync();
         }
 
-        public async Task<Session> GetById(int id)
+        public async Task<Session> GetById(Guid id)
         {
             return await _context.Session.FindAsync(id);
+        }
+
+        public async Task<Session> GetByAccessCode(string accessCode)
+        {
+            return await _context.Session.Where(s => s.access_code == accessCode).FirstOrDefaultAsync();
         }
     }
 }

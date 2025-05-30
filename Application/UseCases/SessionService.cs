@@ -4,7 +4,10 @@ using Application.Interfaces.Queries;
 using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
+using AutoMapper;
 using Domain.Entities;
+using Microsoft.Extensions.Primitives;
+using System.Text;
 
 namespace Application.UseCases
 {
@@ -12,14 +15,22 @@ namespace Application.UseCases
     {
         private readonly ISessionQuery _sessionQuery;
         private readonly ISessionCommand _sessionCommand;
+        private readonly IParticipantService _participantService;
+        private readonly IPresentationServiceClient _presentationServiceClient;
+        private readonly IMapper _mapper;
 
-        public SessionService(ISessionQuery sessionQuery, ISessionCommand sessionCommand)
+        public SessionService(ISessionQuery sessionQuery, ISessionCommand sessionCommand,
+                              IMapper mapper, IParticipantService participantService,
+                              IPresentationServiceClient presentationServiceClient)
         {
             _sessionQuery = sessionQuery;
             _sessionCommand = sessionCommand;
+            _mapper = mapper;
+            _participantService = participantService;
+            _presentationServiceClient = presentationServiceClient;
         }
 
-        public async Task<bool> EndSession(int id)
+        public async Task<bool> EndSession(Guid id)
         {
             var result = await _sessionQuery.GetById(id);
 
@@ -35,10 +46,29 @@ namespace Application.UseCases
 
         public async Task<CreateSessionResponse> CreateSession(CreateSessionRequest request)
         {
-            var _accesCode = Guid.NewGuid();
+            string accessCode; 
+
+            const string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string numeros = "0123456789";
+
+            StringBuilder primeraParte = new StringBuilder();
+            StringBuilder segundaParte = new StringBuilder();
+
+            Random random = new Random();
+
+            for (int i = 0; i < 3; i++)
+            {
+                int indiceLetras = random.Next(letras.Length);
+                int indiceNumeros = random.Next(numeros.Length);
+                primeraParte.Append(letras[indiceLetras]);
+                segundaParte.Append(numeros[indiceNumeros]);
+            }
+
+            accessCode = primeraParte.Append(segundaParte).ToString();
+
             var _session = new Session
             {
-                acces_code = _accesCode,
+                access_code = accessCode,
                 description = request.description,
                 interation_count = 0,
                 active_status = true,
@@ -46,16 +76,20 @@ namespace Application.UseCases
                 start_time = DateTime.Now,
                 presentation_id = request.presentation_id,
                 created_by = request.user_id
-
                 
             };
+
             await _sessionCommand.Create(_session);
+
+            PresentationResponseDTO presentationResponse = await _presentationServiceClient.GetPresentationByIdAsync(request.presentation_id);
 
             CreateSessionResponse response = new CreateSessionResponse()
             {
                 idSession = _session.idSession,
-                acces_code = _session.acces_code
+                access_code = _session.access_code,
+                presentation = presentationResponse
             };
+
             return response;
         }
 
@@ -70,7 +104,7 @@ namespace Application.UseCases
                 var temp = new GetSessionResponse()
                 {
                     idSession = result.idSession,
-                    acces_code = result.acces_code,
+                    access_code = result.access_code,
                     description = result.description,
                     interation_count = result.interation_count,
                     active_status = result.active_status,
@@ -83,6 +117,32 @@ namespace Application.UseCases
 
             return response;
         }
+
+        public async Task<GetSessionResponse> GetSessionByAccessCode(string accessCode)
+        {
+            var results = await _sessionQuery.GetByAccessCode(accessCode);
+
+           GetSessionResponse response = _mapper.Map<GetSessionResponse>(results);
+
+           return response;
+        }
+
+        public async Task<GetParticipantResponse> Join(Guid sessionId, Guid userId)
+        {
+
+            CreateParticipantRequest newParticipant = new CreateParticipantRequest
+            {
+                idSession = sessionId,
+                idUser = userId
+            };
+
+            var results = await _participantService.CreateParticipant(newParticipant);
+
+            GetParticipantResponse response = _mapper.Map<GetParticipantResponse>(results);
+
+            return response;
+        }
+
     }
 }
 

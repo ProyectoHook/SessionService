@@ -8,8 +8,8 @@ namespace Domain.Entities
 {
     public class Session
     {
-        public int idSession { get; set; }
-        public Guid? acces_code { get; set; }
+        public Guid idSession { get; set; }
+        public string access_code { get; set; }
         public required string description { get; set; }
         public int interation_count { get; set; }
         public required bool active_status { get; set; }

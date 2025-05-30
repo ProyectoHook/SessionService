@@ -23,7 +23,7 @@ namespace Infrastructrure.Persistence
             {
                 entity.HasKey(e => e.idSession);
                 entity.Property(e => e.idSession).ValueGeneratedOnAdd();
-
+                entity.Property(u => u.access_code).HasMaxLength(6).IsRequired().IsUnicode();
             });
             modelBuilder.Entity<Participant>(entity =>
             {
