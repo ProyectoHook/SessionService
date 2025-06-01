@@ -11,7 +11,7 @@ namespace Application.Response
         public Guid idSession { get; set; }
         public string access_code { get; set; }
         public string url { get; set; }
+        public int currentSlide { get; set; }
         public PresentationResponseDTO presentation { get; set; }
-
     }
 }

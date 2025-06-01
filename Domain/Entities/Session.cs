@@ -12,6 +12,7 @@ namespace Domain.Entities
         public string access_code { get; set; }
         public required string description { get; set; }
         public int interation_count { get; set; }
+        public int currentSlide { get; set; }
         public required bool active_status { get; set; }
         public required int max_participants { get; set; }
         public required DateTime start_time { get; set; }

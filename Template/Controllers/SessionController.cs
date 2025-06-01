@@ -68,7 +68,7 @@ namespace WebService.Controllers
         }
 
         //ingreso privado
-        [Authorize]
+        //[Authorize]
         [HttpGet("join/private/{accessCode}")]
         public async Task<IActionResult> PrivateJoin(string accessCode, [FromQuery] bool json = false)
         {
@@ -83,21 +83,10 @@ namespace WebService.Controllers
             if (response == null)
                 return StatusCode(404, "Sesion no encontrada");
 
-
+            //agrega el participante
             var result = await _sessionService.Join(response.idSession,userId);
 
-
-            if (json)
-            {
-                return Ok(new
-                {
-                    redirectUrl = $"/session/view/{accessCode}",
-                    user = userId
-                });
-            }
-
-            return Redirect($"/session/view/{accessCode}");
-
+            return StatusCode(200,response);
         }
            
 

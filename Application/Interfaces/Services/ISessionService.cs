@@ -10,5 +10,6 @@ namespace Application.Interfaces.Services
         Task<List<GetSessionResponse>> GetAllSessions();
         Task<GetSessionResponse> GetSessionByAccessCode(string accessCode);
         Task<GetParticipantResponse> Join(Guid sessionId, Guid userId);
+        Task<CreateSessionResponse> UpdateCurrentSlideBySessionId(Guid sessionId, int currentSlide);
     }
 }

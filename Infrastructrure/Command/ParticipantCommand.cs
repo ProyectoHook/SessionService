@@ -22,7 +22,7 @@ namespace Infrastructrure.Command
 
         public async Task<Participant> Create(Participant participant)
         {
-            _context.Participant.AddAsync(participant);
+            await _context.Participant.AddAsync(participant);
             await _context.SaveChangesAsync();
             return participant;
         }

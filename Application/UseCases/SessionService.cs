@@ -75,8 +75,8 @@ namespace Application.UseCases
                 max_participants = request.max_participants,
                 start_time = DateTime.Now,
                 presentation_id = request.presentation_id,
-                created_by = request.user_id
-                
+                created_by = request.user_id,
+                currentSlide = 1                
             };
 
             await _sessionCommand.Create(_session);
@@ -120,11 +120,18 @@ namespace Application.UseCases
 
         public async Task<GetSessionResponse> GetSessionByAccessCode(string accessCode)
         {
-            var results = await _sessionQuery.GetByAccessCode(accessCode);
+            Session results = await _sessionQuery.GetByAccessCode(accessCode);
+            PresentationResponseDTO presentation;
 
-           GetSessionResponse response = _mapper.Map<GetSessionResponse>(results);
+            if (results != null)
+            {
+                presentation = await _presentationServiceClient.GetPresentationByIdAsync(results.presentation_id);
+                GetSessionResponse response = _mapper.Map<GetSessionResponse>(results);
+                response.presentation = presentation;
+                return response;
+            }
 
-           return response;
+            return null;
         }
 
         public async Task<GetParticipantResponse> Join(Guid sessionId, Guid userId)
@@ -136,11 +143,25 @@ namespace Application.UseCases
                 idUser = userId
             };
 
-            var results = await _participantService.CreateParticipant(newParticipant);
+            Participant results = await _participantService.CreateParticipant(newParticipant);
 
-            GetParticipantResponse response = _mapper.Map<GetParticipantResponse>(results);
+            return _mapper.Map<GetParticipantResponse>(results);
+        }
 
+        public async Task<CreateSessionResponse> UpdateCurrentSlideBySessionId(Guid sessionId, int currentSlide)
+        {
+
+            Session session = await _sessionQuery.GetById(sessionId);
+
+            if (session != null)
+            {
+                session.currentSlide = currentSlide;
+                await _sessionCommand.Update(session);
+            }
+
+            CreateSessionResponse response = _mapper.Map<CreateSessionResponse>(session);
             return response;
+
         }
 
     }

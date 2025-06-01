@@ -1,6 +1,7 @@
 ﻿using Application.Request;
 using Application.Response;
 using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Mappers
 {
@@ -9,6 +10,9 @@ namespace Application.Mappers
         public Mapping() 
         {
             CreateMap<CreateSessionResponse,CreateParticipantRequest>();
+            CreateMap<Session, GetSessionResponse>();
+            CreateMap<Participant, GetParticipantResponse>();
+            CreateMap<Session, CreateSessionResponse>();
             
         }
     }
