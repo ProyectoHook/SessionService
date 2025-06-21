@@ -11,6 +11,5 @@ namespace Application.Response
         public int idSession { get; set; }
         public string acces_code { get; set; }
 
-
     }
 }

@@ -80,13 +80,16 @@ namespace Infrastructrure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idSession"));
 
-                    b.Property<int?>("acces_code")
+                    b.Property<int?>("access_code")
                         .HasColumnType("int");
 
                     b.Property<bool>("active_status")
                         .HasColumnType("bit");
 
                     b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("currentSlide")
                         .HasColumnType("int");
 
                     b.Property<string>("description")
@@ -110,9 +113,9 @@ namespace Infrastructrure.Migrations
 
                     b.HasKey("idSession");
 
-                    b.HasIndex("acces_code")
+                    b.HasIndex("access_code")
                         .IsUnique()
-                        .HasFilter("[acces_code] IS NOT NULL");
+                        .HasFilter("[access_code] IS NOT NULL");
 
                     b.ToTable("Session");
                 });
@@ -132,7 +135,7 @@ namespace Infrastructrure.Migrations
                 {
                     b.HasOne("Domain.Entities.AccesCode", "AccesCode")
                         .WithOne("Session")
-                        .HasForeignKey("Domain.Entities.Session", "acces_code")
+                        .HasForeignKey("Domain.Entities.Session", "access_code")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AccesCode");

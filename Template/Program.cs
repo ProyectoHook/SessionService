@@ -1,4 +1,4 @@
-using Application.UseCases;
+﻿using Application.UseCases;
 using Infrastructrure.Command;
 using Infrastructrure.Persistence;
 using Infrastructrure.Query;
@@ -11,6 +11,7 @@ using Application.Interfaces.Services;
 using Application.Interfaces.Queries;
 using Application.Interfaces.Commands;
 using Application.Mappers;
+using Template.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,25 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins(
+                              "http://127.0.0.1:5500",
+                              "http://localhost:5500"
+                          )
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
+
+
+//SignalR
+builder.Services.AddSignalR();
 
 
 var app = builder.Build();
@@ -83,15 +103,26 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// routing antes de auth
+app.UseRouting();
+
+// CORS antes de auth si se usa cookies
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseHttpsRedirection();
 
-//JWT
+// sesiones primero
+app.UseSession();
+
+// luego auth
 app.UseAuthentication();
 app.UseAuthorization();
 
-//ativa sesiones
-app.UseSession();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<SessionHub>("/sessionHub");
+});
 
 app.Run();

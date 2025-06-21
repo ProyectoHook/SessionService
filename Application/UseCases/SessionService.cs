@@ -4,6 +4,7 @@ using Application.Interfaces.Queries;
 using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
+using AutoMapper;
 using Domain.Entities;
 
 namespace Application.UseCases
@@ -14,13 +15,15 @@ namespace Application.UseCases
         private readonly ISessionCommand _sessionCommand;
         private readonly IAccesCodeCommand _accesCodeCommand;
         private readonly IAccesCodeQuery _accesCodeQuery;
+        private readonly IMapper _mapper;
 
-        public SessionService(ISessionQuery sessionQuery, ISessionCommand sessionCommand, IAccesCodeCommand accesCodeCommand, IAccesCodeQuery accesCodeQuery)
+        public SessionService(ISessionQuery sessionQuery, ISessionCommand sessionCommand, IAccesCodeCommand accesCodeCommand, IAccesCodeQuery accesCodeQuery, IMapper mapper)
         {
             _sessionQuery = sessionQuery;
             _sessionCommand = sessionCommand;
             _accesCodeCommand = accesCodeCommand;
             _accesCodeQuery = accesCodeQuery;
+            _mapper = mapper;
         }
 
         public async Task<bool> EndSession(int id)
@@ -34,11 +37,11 @@ namespace Application.UseCases
             result.active_status = false;
 
             //Seteo el accescode en false para poder volver a usarlo
-            var sessionAccesCode = await _accesCodeQuery.GetById(result.acces_code.Value);
+            var sessionAccesCode = await _accesCodeQuery.GetById(result.access_code.Value);
             sessionAccesCode.status = false;
             await _accesCodeCommand.Update(sessionAccesCode);
 
-            result.acces_code = null;
+            result.access_code = null;
 
             await _sessionCommand.Update(result);
             
@@ -78,7 +81,7 @@ namespace Application.UseCases
 
             var _session = new Session
             {
-                acces_code = availableCode.idCode,
+                access_code = availableCode.idCode,
                 description = request.description,
                 interation_count = 0,
                 active_status = true,
@@ -109,7 +112,7 @@ namespace Application.UseCases
                 var temp = new GetSessionResponse()
                 {
                     idSession = result.idSession,
-                    acces_code = result.acces_code,
+                    acces_code = result.access_code,
                     description = result.description,
                     interation_count = result.interation_count,
                     active_status = result.active_status,
@@ -121,6 +124,45 @@ namespace Application.UseCases
             }
 
             return response;
+        }
+
+        public async Task<CreateSessionResponse> UpdateCurrentSlide(int sessionId, int slideIndex)
+        {
+
+            Session session =  await _sessionQuery.GetById(sessionId);
+
+            if (session != null)
+            {
+                session.currentSlide = slideIndex;
+                await _sessionCommand.Update(session);
+            }
+
+            CreateSessionResponse response = _mapper.Map<CreateSessionResponse>(session);
+            
+            return response;
+
+        }
+
+        public async Task<GetSessionResponse> GetSessionByAccessCode(string accessCode)
+        {
+
+            var sessions = (await _sessionQuery.GetAll());
+
+            var session = sessions.FirstOrDefault(s => s.AccesCode != null && s.AccesCode.code == accessCode);
+
+            if (session == null) { throw new ExceptionNotFound("Session no encontrada"); }
+
+            var sessionDto = new GetSessionResponse() {
+                idSession = session.idSession,
+                acces_code = session.access_code,
+                description = session.description,
+                interation_count = session.interation_count,
+                max_participants = session.max_participants,
+                presentation_id=session.presentation_id,
+                start_time = session.start_time,
+                active_status = session.active_status
+             };
+            return sessionDto;
         }
     }
 }

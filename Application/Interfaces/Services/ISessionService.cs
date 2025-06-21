@@ -15,6 +15,8 @@ namespace Application.Interfaces.Services
         Task<CreateSessionResponse> CreateSession(CreateSessionRequest request);
         Task<bool> EndSession(int id);
         Task<List<GetSessionResponse>> GetAllSessions();
+        Task<GetSessionResponse> GetSessionByAccessCode(string accessCode);
+        Task<CreateSessionResponse> UpdateCurrentSlide(int sessionId, int slideIndex);
 
     }
 }

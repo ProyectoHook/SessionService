@@ -27,7 +27,7 @@ namespace Infrastructrure.Persistence
 
                 entity.HasOne(s => s.AccesCode)
                 .WithOne(ac => ac.Session)
-                .HasForeignKey<Session>(f => f.acces_code)
+                .HasForeignKey<Session>(f => f.access_code)
                 .OnDelete(DeleteBehavior.NoAction);
                 
                 
