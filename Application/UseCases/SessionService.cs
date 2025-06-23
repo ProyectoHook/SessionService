@@ -149,8 +149,12 @@ namespace Application.UseCases
             var sessions = (await _sessionQuery.GetAll());
 
             var session = sessions.FirstOrDefault(s => s.AccesCode != null && s.AccesCode.code == accessCode);
+           
 
+            //VALIDACIONES
             if (session == null) { throw new ExceptionNotFound("Session no encontrada"); }
+            if (session.active_status == false) { throw new ExceptionBadRequest("La session no se encuentra en un estado activo"); }
+
 
             var sessionDto = new GetSessionResponse() {
                 idSession = session.idSession,

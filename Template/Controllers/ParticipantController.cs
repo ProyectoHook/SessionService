@@ -23,14 +23,15 @@ namespace Template.Controllers
 
         [HttpPost("create")]
         [Authorize]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateParticipant([FromBody] CreateParticipantRequest request)
         {
             try
             {
                 var result = await _participantService.CreateParticipant(request);
-                return Ok("Usuario ingresado a la sesión"); // Devuelve 201 Created sin contenido
+                return StatusCode(201, new { message = "Usuario ingresado a la sesión" });
+
             }
             catch (Exception ex)
             {

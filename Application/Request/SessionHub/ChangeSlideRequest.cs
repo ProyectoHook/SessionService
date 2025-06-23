@@ -8,7 +8,7 @@ namespace Application.Request.SessionHub
 {
     public class ChangeSlideRequest
     {
-        Guid SessionId {  get; set; }
-        int SlideIndex { get; set; }
+        public int SessionId {  get; set; }
+        public int SlideIndex { get; set; }
     }
 }

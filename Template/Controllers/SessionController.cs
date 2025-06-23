@@ -4,6 +4,7 @@ using System.Text;
 using Application.Exceptions;
 using Application.Interfaces.Services;
 using Application.Request;
+using Application.Request.SessionHub;
 using Application.Response;
 using Application.UseCases;
 using Domain.Entities;
@@ -105,6 +106,23 @@ namespace WebService.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("change")]
+        public async Task<IActionResult> ChangeSlide([FromBody] ChangeSlideRequest request)
+        {
+            try
+            {
+                await _sessionService.UpdateCurrentSlide(request.SessionId, request.SlideIndex);
+                await _hubContext.Clients.Group(request.SessionId.ToString())
+                                         .SendAsync("ChangeSlide", request.SlideIndex);
+
+                return Ok(new { message = $"Slide cambiado a {request.SlideIndex} para la sesión {request.SessionId}" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
             }
         }
     }

@@ -15,16 +15,12 @@ namespace Template.Hubs
         //Cambiar slide
         public async Task ChangeSlide(int sessionId, int slideIndex)
         {
-
             var response = await _sessionService.UpdateCurrentSlide(sessionId, slideIndex);
-
             await Clients.Group(sessionId.ToString()).SendAsync("ChangeSlide", slideIndex);
-
 
         }
 
-        //Unirse a un grupo
-        public async Task JoinSession(int sessionId)
+        public async Task JoinSession(string sessionId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, sessionId.ToString());
         }
@@ -41,6 +37,13 @@ namespace Template.Hubs
             await Clients.Group(sessionId.ToString()).SendAsync("SessionClosed");
 
         }
+
+        public async Task SendMessageToGroup(int sessionId, string sender, string message)
+        {
+            await Clients.Group(sessionId.ToString())
+                .SendAsync("ReceiveMessage", sender, message);
+        }
+
 
     }
 

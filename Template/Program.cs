@@ -86,7 +86,8 @@ builder.Services.AddCors(options =>
                               "http://localhost:5500"
                           )
                                 .AllowAnyHeader()
-                                .AllowAnyMethod();
+                                .AllowAnyMethod()
+                                .AllowCredentials(); // 👈 Necesario para permitir cookies / auth
                       });
 });
 
