@@ -23,21 +23,22 @@ namespace Template.Controllers
 
         [HttpPost("create")]
         [Authorize]
-        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(createParticipantResponse), 201)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateParticipant([FromBody] CreateParticipantRequest request)
         {
             try
             {
-                var result = await _participantService.CreateParticipant(request);
-                return StatusCode(201, new { message = "Usuario ingresado a la sesión" });
+                var response = await _participantService.CreateParticipant(request);
 
+                return StatusCode(201, response);
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
         }
+
 
         [HttpGet("getById/{id}")]
         [Authorize]

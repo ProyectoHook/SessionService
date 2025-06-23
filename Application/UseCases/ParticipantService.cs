@@ -27,13 +27,18 @@ namespace Application.UseCases
             _sessionQuery = sessionQuery;
         }
 
-        public async Task<bool> CreateParticipant(CreateParticipantRequest request)
+        public async Task<createParticipantResponse> CreateParticipant(CreateParticipantRequest request)
         {
             var sesion_id = request.idSession;
             var sesion_db = await _sessionQuery.GetById(sesion_id);
             
+           
+
             //Comprobación de la existencia de la sesión
             if (sesion_db == null) { throw new ExceptionNotFound("Sesión no encontrada"); }
+
+            var response = new createParticipantResponse() { presentationId = sesion_db.presentation_id, message = "Usuario añadido"};
+            
 
             //Comprobación del estado de la sesión
             if (sesion_db.active_status == false) { throw new ExceptionBadRequest("La sesión no se encuentra activa"); }
@@ -41,7 +46,10 @@ namespace Application.UseCases
             //Comprobar que el mismo usuario no se vuelva a unir
             var users = await _participantQuery.GetAll();
             users = users.Where(c => c.idUser == request.idUser).ToList();
-            if (users.Count > 0) { throw new ExceptionBadRequest("El usuario ya se encuentra en la sesión"); }
+            if (users.Count > 0) {
+                response.message = "El usuario ya se encuentra registrado como participante. Devolviendo presentationId";
+                return response; 
+            }
 
             var participant = new Domain.Entities.Participant()
             { 
@@ -52,7 +60,8 @@ namespace Application.UseCases
             };
 
             await _participantCommand.Create(participant);
-            return true;
+
+            return response;
         }
 
         public async Task<List<GetParticipantResponse>> GetAllParticipants()
