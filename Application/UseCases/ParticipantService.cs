@@ -29,7 +29,7 @@ namespace Application.UseCases
 
         public async Task<createParticipantResponse> CreateParticipant(CreateParticipantRequest request)
         {
-            var sesion_id = request.idSession;
+            Guid sesion_id = request.idSession;
             var sesion_db = await _sessionQuery.GetById(sesion_id);
             
            
@@ -76,7 +76,7 @@ namespace Application.UseCases
                 {
                     activityStatus = result.activityStatus,
                     connectionId = result.connectionId,
-                    idSession = result.idSession,
+                    SessionId = result.idSession,
                     idParticipant = result.idParticipant,
                     connectionStart = result.connectionStart,
                     idUser = result.idUser,
@@ -96,7 +96,7 @@ namespace Application.UseCases
             {
                 activityStatus = result.activityStatus,
                 connectionId = result.connectionId,
-                idSession = result.idSession,
+                SessionId = result.idSession,
                 idParticipant = result.idParticipant,
                 connectionStart = result.connectionStart,
                 idUser = result.idUser,

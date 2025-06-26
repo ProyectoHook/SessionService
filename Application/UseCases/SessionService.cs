@@ -15,18 +15,23 @@ namespace Application.UseCases
         private readonly ISessionCommand _sessionCommand;
         private readonly IAccesCodeCommand _accesCodeCommand;
         private readonly IAccesCodeQuery _accesCodeQuery;
+        private readonly IPresentationServiceClient _presentationServiceClient;
+        private readonly IParticipantService _participantService;
         private readonly IMapper _mapper;
 
-        public SessionService(ISessionQuery sessionQuery, ISessionCommand sessionCommand, IAccesCodeCommand accesCodeCommand, IAccesCodeQuery accesCodeQuery, IMapper mapper)
+        public SessionService(ISessionQuery sessionQuery, ISessionCommand sessionCommand, IAccesCodeCommand accesCodeCommand, IAccesCodeQuery accesCodeQuery, IMapper mapper, IPresentationServiceClient presentationServiceClient,IParticipantService participantService)
         {
             _sessionQuery = sessionQuery;
             _sessionCommand = sessionCommand;
             _accesCodeCommand = accesCodeCommand;
             _accesCodeQuery = accesCodeQuery;
+
             _mapper = mapper;
+            _presentationServiceClient = presentationServiceClient;
+            _participantService = participantService;
         }
 
-        public async Task<bool> EndSession(int id)
+        public async Task<bool> EndSession(Guid id)
         {
             var result = await _sessionQuery.GetById(id);
 
@@ -51,9 +56,13 @@ namespace Application.UseCases
 
         public async Task<CreateSessionResponse> CreateSession(CreateSessionRequest request)
         {
+
             var acces_codes = await _accesCodeQuery.GetAll();
+
             var availableCode = acces_codes.FirstOrDefault(ac => ac.status == false);
 
+            PresentationResponseDTO presentationResponse = await _presentationServiceClient.GetPresentationByIdAsync(request.presentation_id);
+            
 
             if (availableCode == null)
             {
@@ -77,8 +86,6 @@ namespace Application.UseCases
                 await _accesCodeCommand.Update(availableCode);
             }
 
-
-
             var _session = new Session
             {
                 access_code = availableCode.idCode,
@@ -95,9 +102,11 @@ namespace Application.UseCases
 
             CreateSessionResponse response = new CreateSessionResponse()
             {
-                idSession = _session.idSession,
+                SessionId = _session.SessionId,
                 acces_code = availableCode.code,
+                presentation = presentationResponse
             };
+
             return response;
         }
 
@@ -111,7 +120,7 @@ namespace Application.UseCases
             {
                 var temp = new GetSessionResponse()
                 {
-                    idSession = result.idSession,
+                    SessionId = result.SessionId,
                     acces_code = result.access_code,
                     description = result.description,
                     interation_count = result.interation_count,
@@ -126,7 +135,7 @@ namespace Application.UseCases
             return response;
         }
 
-        public async Task<CreateSessionResponse> UpdateCurrentSlide(int sessionId, int slideIndex)
+        public async Task<CreateSessionResponse> UpdateCurrentSlide(Guid sessionId, int slideIndex)
         {
 
             Session session =  await _sessionQuery.GetById(sessionId);
@@ -157,7 +166,7 @@ namespace Application.UseCases
 
 
             var sessionDto = new GetSessionResponse() {
-                idSession = session.idSession,
+                SessionId = session.SessionId,
                 acces_code = session.access_code,
                 description = session.description,
                 interation_count = session.interation_count,
@@ -168,6 +177,37 @@ namespace Application.UseCases
              };
             return sessionDto;
         }
+
+        //public async Task<CreateSessionResponse> UpdateCurrentSlideBySessionId(Guid sessionId, int currentSlide)
+        //{
+
+        //    Session session = await _sessionQuery.GetById(sessionId);
+
+        //    if (session != null)
+        //    {
+        //        session.currentSlide = currentSlide;
+        //        await _sessionCommand.Update(session);
+        //    }
+
+        //    CreateSessionResponse response = _mapper.Map<CreateSessionResponse>(session);
+        //    return response;
+
+        //}
+
+        public async Task<GetParticipantResponse> Join(Guid sessionId, Guid userId)
+        {
+
+            CreateParticipantRequest newParticipant = new CreateParticipantRequest
+            {
+                idSession = sessionId,
+                idUser = userId
+            };
+
+            createParticipantResponse results = await _participantService.CreateParticipant(newParticipant);
+
+            return _mapper.Map<GetParticipantResponse>(results);
+        }
+
     }
 }
 

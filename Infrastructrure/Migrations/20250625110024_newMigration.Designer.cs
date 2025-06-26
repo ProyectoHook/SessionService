@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructrure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250621035820_first_setup")]
-    partial class first_setup
+    [Migration("20250625110024_newMigration")]
+    partial class newMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,8 +62,8 @@ namespace Infrastructrure.Migrations
                     b.Property<DateTime>("connectionStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("idSession")
-                        .HasColumnType("int");
+                    b.Property<Guid>("idSession")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("idUser")
                         .HasColumnType("uniqueidentifier");
@@ -77,11 +77,9 @@ namespace Infrastructrure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Session", b =>
                 {
-                    b.Property<int>("idSession")
+                    b.Property<Guid>("SessionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idSession"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("access_code")
                         .HasColumnType("int");
@@ -89,8 +87,8 @@ namespace Infrastructrure.Migrations
                     b.Property<bool>("active_status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("created_by")
-                        .HasColumnType("int");
+                    b.Property<Guid>("created_by")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("currentSlide")
                         .HasColumnType("int");
@@ -114,7 +112,7 @@ namespace Infrastructrure.Migrations
                     b.Property<DateTime>("start_time")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("idSession");
+                    b.HasKey("SessionId");
 
                     b.HasIndex("access_code")
                         .IsUnique()

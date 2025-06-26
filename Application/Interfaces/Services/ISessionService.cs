@@ -13,10 +13,11 @@ namespace Application.Interfaces.Services
     public interface ISessionService
     {
         Task<CreateSessionResponse> CreateSession(CreateSessionRequest request);
-        Task<bool> EndSession(int id);
+        Task<bool> EndSession(Guid id);
+        Task<GetParticipantResponse> Join(Guid sessionId, Guid userId);
         Task<List<GetSessionResponse>> GetAllSessions();
         Task<GetSessionResponse> GetSessionByAccessCode(string accessCode);
-        Task<CreateSessionResponse> UpdateCurrentSlide(int sessionId, int slideIndex);
+        Task<CreateSessionResponse> UpdateCurrentSlide(Guid sessionId, int slideIndex);
 
     }
 }

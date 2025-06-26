@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructrure.Migrations
 {
     /// <inheritdoc />
-    public partial class first_setup : Migration
+    public partial class newMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,8 +29,7 @@ namespace Infrastructrure.Migrations
                 name: "Session",
                 columns: table => new
                 {
-                    idSession = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     access_code = table.Column<int>(type: "int", nullable: true),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     interation_count = table.Column<int>(type: "int", nullable: false),
@@ -39,12 +38,12 @@ namespace Infrastructrure.Migrations
                     start_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     end_time = table.Column<DateTime>(type: "datetime2", nullable: true),
                     presentation_id = table.Column<int>(type: "int", nullable: false),
-                    created_by = table.Column<int>(type: "int", nullable: false),
+                    created_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     currentSlide = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Session", x => x.idSession);
+                    table.PrimaryKey("PK_Session", x => x.SessionId);
                     table.ForeignKey(
                         name: "FK_Session_AccesCode_access_code",
                         column: x => x.access_code,
@@ -62,7 +61,7 @@ namespace Infrastructrure.Migrations
                     connectionStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     activityStatus = table.Column<bool>(type: "bit", nullable: false),
                     connectionId = table.Column<int>(type: "int", nullable: true),
-                    idSession = table.Column<int>(type: "int", nullable: false)
+                    idSession = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +70,7 @@ namespace Infrastructrure.Migrations
                         name: "FK_Participant_Session_idSession",
                         column: x => x.idSession,
                         principalTable: "Session",
-                        principalColumn: "idSession");
+                        principalColumn: "SessionId");
                 });
 
             migrationBuilder.CreateIndex(

@@ -14,6 +14,6 @@ namespace Application.Response
         public required DateTime connectionStart { get; set; }
         public required bool activityStatus { get; set; }
         public int? connectionId { get; set; }
-        public int  idSession { get; set; }
+        public Guid SessionId { get; set; }
     }
 }

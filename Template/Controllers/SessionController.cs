@@ -50,10 +50,54 @@ namespace WebService.Controllers
 
         }
 
-        
+
+        //ingreso publico
+        [AllowAnonymous]
+        [HttpGet("join/{accessCode}")]
+        public async Task<IActionResult> PublicJoin(string accessCode)
+        {
+
+            // Redireccionar al login del microservicio de user
+            var returnUrl = Url.Action("PrivateJoin", "Session", new { accessCode }, Request.Scheme);
+
+            //luego quitar hardcodeo
+            var loginUrl = $"https://localhost:59542/api/Auth/login?returnUrl={Uri.EscapeDataString(returnUrl)}";
+
+            return Redirect(loginUrl);
+
+            //var returnUrl = await PrivateJoin(accessCode);
+            ////luego quitar hardcodeo
+            //var loginUrl = $"https://auth.myapp.com/login?returnUrl={returnUrl}";
+            //return Redirect(loginUrl);
+        }
+
+        //ingreso privado
+        //[Authorize]
+        [HttpGet("join/private/{accessCode}")]
+        public async Task<IActionResult> PrivateJoin(string accessCode, [FromQuery] bool json = false)
+        {
+
+            //obtiene user desde el JWT
+            Guid userId;
+
+            Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out userId);
+
+            GetSessionResponse response = await _sessionService.GetSessionByAccessCode(accessCode);
+
+            if (response == null)
+                return StatusCode(404, "Sesion no encontrada");
+
+            //agrega el participante
+            var result = await _sessionService.Join(response.SessionId, userId);
+
+            return StatusCode(200, response);
+        }
+
+
+
         [HttpPost("logout/{id}")]
         //[Authorize]
-        public async Task<IActionResult> LogoutSession(int id)
+        public async Task<IActionResult> LogoutSession(Guid id)
         {
             try 
             {
@@ -125,5 +169,14 @@ namespace WebService.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        [HttpGet("status")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Status()
+        {
+            await Task.CompletedTask;
+            return StatusCode(200, "Session Service activo");
+        }
+
     }
 }

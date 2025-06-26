@@ -12,6 +12,7 @@ using Application.Interfaces.Queries;
 using Application.Interfaces.Commands;
 using Application.Mappers;
 using Template.Hubs;
+using Infrastructrure.HttpClients;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,11 @@ builder.Services.AddScoped<IAccesCodeQuery, AccesCodeQuery>();
 builder.Services.AddScoped<IParticipantCommand, ParticipantCommand>();
 builder.Services.AddScoped<IParticipantQuery, ParticipantQuery>();
 builder.Services.AddScoped<IParticipantService, ParticipantService>();
+
+builder.Services.AddHttpClient<IPresentationServiceClient, PresentationServiceClient>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7112/"); // O desde config
+});
 
 //Mapper
 builder.Services.AddAutoMapper(typeof(Mapping));
@@ -83,7 +89,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500")
+                          policy.WithOrigins("http://localhost:5500",
+                                             "http://127.0.0.1:5500",
+                                             "http://127.0.0.1:3000")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod()
                                 .AllowCredentials(); // Si usás credenciales

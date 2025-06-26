@@ -22,8 +22,8 @@ namespace Infrastructrure.Persistence
         {
             modelBuilder.Entity<Session>(entity =>
             {
-                entity.HasKey(e => e.idSession);
-                entity.Property(e => e.idSession).ValueGeneratedOnAdd();
+                entity.HasKey(e => e.SessionId);
+                entity.Property(e => e.SessionId).ValueGeneratedOnAdd();
 
                 entity.HasOne(s => s.AccesCode)
                 .WithOne(ac => ac.Session)

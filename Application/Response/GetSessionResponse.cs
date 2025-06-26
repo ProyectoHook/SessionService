@@ -9,7 +9,7 @@ namespace Application.Response
 {
     public class GetSessionResponse
     {
-        public int idSession { get; set; }
+        public Guid SessionId { get; set; }
         public int? acces_code { get; set; }
         public string description { get; set; }
         public int interation_count { get; set; }
