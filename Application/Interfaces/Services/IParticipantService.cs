@@ -11,7 +11,7 @@ namespace Application.Interfaces.Services
 {
     public interface IParticipantService
     {
-        Task<createParticipantResponse> CreateParticipant(CreateParticipantRequest request);
+        Task<GetParticipantResponse> CreateParticipant(CreateParticipantRequest request);
         Task<GetParticipantResponse> GetByIdParticipant(int id);
         Task<List<GetParticipantResponse>> GetAllParticipants();
     }

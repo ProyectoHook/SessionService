@@ -23,6 +23,10 @@ namespace Infrastructrure.Query
         {
             return await _context.Participant.ToListAsync();
         }
+        public async Task<List<Participant>> GetAllBySessionId(Guid sessionId)
+        {
+            return await _context.Participant.Where(p => p.idSession == sessionId).ToListAsync();
+        }
 
         public async Task<Participant> GetById(int id)
         {

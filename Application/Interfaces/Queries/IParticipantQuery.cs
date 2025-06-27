@@ -11,5 +11,6 @@ namespace Application.Interfaces.Queries
     {
         Task<Participant> GetById(int id);
         Task<List<Participant>> GetAll();
+        Task<List<Participant>> GetAllBySessionId(Guid sessionId);
     }
 }

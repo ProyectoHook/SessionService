@@ -11,8 +11,9 @@ namespace Application.Mappers
         {
             CreateMap<CreateSessionResponse, CreateParticipantRequest>();
             CreateMap<Session, GetSessionResponse>();
-            CreateMap<Participant, GetParticipantResponse>();
+            CreateMap<Participant, GetParticipantResponse>().ReverseMap();
             CreateMap<Session, CreateSessionResponse>();
+
 
         }
     }
