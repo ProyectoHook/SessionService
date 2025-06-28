@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using Application.Request.SessionHub;
 using Application.Response;
+using Azure.Core;
 
 namespace Template.Hubs
 {
@@ -19,12 +20,17 @@ namespace Template.Hubs
         }
 
         //Cambiar slide
-        public async Task ChangeSlide(string sessionId, int slideIndex)
+        public async Task ChangeSlide(string sessionId, ChangeSlideRequest slide)
         {
             if (Guid.TryParse(sessionId, out Guid result))
             {
-                var response = await _sessionService.UpdateCurrentSlide(result, slideIndex);
-                await Clients.Group(sessionId).SendAsync("ReceiveSlide", slideIndex);
+                if (slide.Ask != null)
+                {
+                    var Response = await _historyService.SlideChange(slide);
+                    
+                }
+                var response = await _sessionService.UpdateCurrentSlide(result, slide.SlideIndex);
+                await Clients.Group(sessionId).SendAsync("ReceiveSlide", slide.SlideIndex); 
             }
         }
 

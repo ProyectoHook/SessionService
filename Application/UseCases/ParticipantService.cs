@@ -4,6 +4,7 @@ using Application.Interfaces.Queries;
 using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
+using AutoMapper;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,50 +20,66 @@ namespace Application.UseCases
         private readonly IParticipantCommand _participantCommand;
         private readonly IParticipantQuery _participantQuery;
         private readonly ISessionQuery _sessionQuery;
+        private readonly IMapper _mapper;
 
-        public ParticipantService(IParticipantCommand participantCommand, IParticipantQuery participantQuery, ISessionQuery sessionQuery)
+        public ParticipantService(IParticipantCommand participantCommand, IParticipantQuery participantQuery, ISessionQuery sessionQuery,IMapper mapper)
         {
             _participantCommand = participantCommand;
             _participantQuery = participantQuery;
             _sessionQuery = sessionQuery;
+            _mapper = mapper;
         }
 
-        public async Task<createParticipantResponse> CreateParticipant(CreateParticipantRequest request)
+        public async Task<GetParticipantResponse> CreateParticipant(CreateParticipantRequest request)
         {
             Guid sesion_id = request.idSession;
-            var sesion_db = await _sessionQuery.GetById(sesion_id);
-            
-           
+            Session sesion_db = await _sessionQuery.GetById(sesion_id);
+
+            GetParticipantResponse getParticipantResponse;
 
             //Comprobación de la existencia de la sesión
             if (sesion_db == null) { throw new ExceptionNotFound("Sesión no encontrada"); }
 
-            var response = new createParticipantResponse() { presentationId = sesion_db.presentation_id, message = "Usuario añadido"};
-            
-
             //Comprobación del estado de la sesión
             if (sesion_db.active_status == false) { throw new ExceptionBadRequest("La sesión no se encuentra activa"); }
 
+            
+            List<Participant> listaDeParticipantesDeLaSesion = await _participantQuery.GetAllBySessionId(sesion_id);
+
+            //var response = new createParticipantResponse() {
+            //    presentationId = sesion_db.presentation_id,
+            //    message = "Usuario añadido"};
+                      
+
             //Comprobar que el mismo usuario no se vuelva a unir
-            var users = await _participantQuery.GetAll();
-            users = users.Where(c => c.idUser == request.idUser).ToList();
-            if (users.Count > 0) {
-                response.message = "El usuario ya se encuentra registrado como participante. Devolviendo presentationId";
-                return response; 
+            //List<Participant> users = await _participantQuery.GetAll();
+
+            if (listaDeParticipantesDeLaSesion.Any(p => p.idUser == request.idUser))
+            {
+                //response.message = "El usuario ya se encuentra registrado como participante. Devolviendo presentationId";
+                Participant participant = listaDeParticipantesDeLaSesion.Where(p => p.idUser == request.idUser).First();
+                getParticipantResponse = _mapper.Map<GetParticipantResponse>(participant);
+                return getParticipantResponse;
+            }
+            else
+            {
+                var participant = new Domain.Entities.Participant()
+                {
+                    idUser = request.idUser,
+                    connectionStart = DateTime.Now,
+                    activityStatus = true,
+                    idSession = request.idSession
+                };
+
+                await _participantCommand.Create(participant);
+
+                getParticipantResponse = _mapper.Map<GetParticipantResponse>(participant);
+                return getParticipantResponse;
             }
 
-            var participant = new Domain.Entities.Participant()
-            { 
-            idUser = request.idUser,
-            connectionStart = DateTime.Now,
-            activityStatus = true,
-            idSession = request.idSession
-            };
-
-            await _participantCommand.Create(participant);
-
-            return response;
         }
+    
+    
 
         public async Task<List<GetParticipantResponse>> GetAllParticipants()
         {

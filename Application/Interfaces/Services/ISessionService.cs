@@ -14,7 +14,7 @@ namespace Application.Interfaces.Services
     {
         Task<CreateSessionResponse> CreateSession(CreateSessionRequest request);
         Task<bool> EndSession(Guid id);
-        Task<createParticipantResponse> Join(Guid sessionId, Guid userId);
+        Task<GetParticipantResponse> Join(Guid sessionId, Guid userId);
         Task<List<GetSessionResponse>> GetAllSessions();
         Task<GetSessionResponse> GetSessionByAccessCode(string accessCode);
         Task<CreateSessionResponse> UpdateCurrentSlide(Guid sessionId, int slideIndex);

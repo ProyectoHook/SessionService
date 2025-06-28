@@ -32,5 +32,10 @@ namespace Infrastructrure.Query
         {
             return await _context.Session.FindAsync(id);
         }
+
+        public async Task<Session> GetByAccessCode(string accessCode)
+        {
+            return await _context.Session.Where(s => s.AccesCode.code == accessCode).FirstOrDefaultAsync();
+        }
     }
 }

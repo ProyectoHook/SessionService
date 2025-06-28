@@ -18,6 +18,10 @@ namespace Application.Response
         public  DateTime start_time { get; set; }
         public DateTime? end_time { get; set; }
         public  int presentation_id { get; set; }
+        public required Guid created_by { get; set; }
+        public int? currentSlide { get; set; }
+        public PresentationResponseDTO presentation { get; set; }
+
 
     }
 }

@@ -95,8 +95,7 @@ namespace Application.UseCases
                 max_participants = request.max_participants,
                 start_time = DateTime.Now,
                 presentation_id = request.presentation_id,
-                created_by = request.user_id
-                                
+                created_by = request.user_id             
             };
             await _sessionCommand.Create(_session);
 
@@ -124,6 +123,7 @@ namespace Application.UseCases
                     acces_code = result.access_code,
                     description = result.description,
                     interation_count = result.interation_count,
+                    created_by = result.created_by,
                     active_status = result.active_status,
                     max_participants = result.max_participants,
                     start_time = result.start_time,
@@ -155,9 +155,10 @@ namespace Application.UseCases
         public async Task<GetSessionResponse> GetSessionByAccessCode(string accessCode)
         {
 
-            var sessions = (await _sessionQuery.GetAll());
+            Session session = await _sessionQuery.GetByAccessCode(accessCode);
 
-            var session = sessions.FirstOrDefault(s => s.AccesCode != null && s.AccesCode.code == accessCode);
+            //var sessions = (await _sessionQuery.GetAll());
+            //var session = sessions.FirstOrDefault(s => s.AccesCode != null && s.AccesCode.code == accessCode);
            
 
             //VALIDACIONES
@@ -171,8 +172,10 @@ namespace Application.UseCases
                 description = session.description,
                 interation_count = session.interation_count,
                 max_participants = session.max_participants,
+                currentSlide = session.currentSlide,
                 presentation_id=session.presentation_id,
                 start_time = session.start_time,
+                created_by = session.created_by,
                 active_status = session.active_status
              };
             return sessionDto;
@@ -194,7 +197,7 @@ namespace Application.UseCases
 
         //}
 
-        public async Task<createParticipantResponse> Join(Guid sessionId, Guid userId)
+        public async Task<GetParticipantResponse> Join(Guid sessionId, Guid userId)
         {
 
             CreateParticipantRequest newParticipant = new CreateParticipantRequest
@@ -203,9 +206,12 @@ namespace Application.UseCases
                 idUser = userId
             };
 
-            createParticipantResponse results = await _participantService.CreateParticipant(newParticipant);
+
+            GetParticipantResponse results = await _participantService.CreateParticipant(newParticipant);
+
+            //GetParticipantResponse getParticipantResponse = _mapper.Map<GetParticipantResponse>(results);
             return results;
-            //return _mapper.Map<GetParticipantResponse>(results);
+
         }
 
     }

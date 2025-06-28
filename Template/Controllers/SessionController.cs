@@ -24,14 +24,18 @@ namespace WebService.Controllers
     public class SessionController : ControllerBase
     {
         private readonly ISessionService _sessionService;
+        private readonly IPresentationServiceClient _presentationServiceClient;
         private readonly IHubContext<SessionHub> _hubContext;
         private readonly IHistoryService _historyService;
 
-        public SessionController(ISessionService sessionService, IHubContext<SessionHub> hubContext, IHistoryService historyService)
+
+        public SessionController(ISessionService sessionService, IHubContext<SessionHub> hubContext, IPresentationServiceClient presentationServiceClient, IHistoryService historyService)
         {
             _sessionService = sessionService;
             _hubContext = hubContext;
+            _presentationServiceClient = presentationServiceClient;
             _historyService = historyService;
+
         }
 
 
@@ -74,23 +78,26 @@ namespace WebService.Controllers
         }
 
         //ingreso privado
-        //[Authorize]
+        [Authorize]
         [HttpGet("join/private/{accessCode}")]
-        public async Task<IActionResult> PrivateJoin(string accessCode, [FromQuery] bool json = false)
+        //public async Task<IActionResult> PrivateJoin(string accessCode, [FromQuery] bool json = false)
+        public async Task<IActionResult> PrivateJoin([FromRoute]string accessCode)
         {
 
-            //obtiene user desde el JWT
             Guid userId;
 
             Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out userId);
 
             GetSessionResponse response = await _sessionService.GetSessionByAccessCode(accessCode);
 
+            response.presentation = await _presentationServiceClient.GetPresentationByIdAsync(response.presentation_id);
+
             if (response == null)
                 return StatusCode(404, "Sesion no encontrada");
 
             //agrega el participante
-            var result = await _sessionService.Join(response.SessionId, userId);
+            //var result = await _sessionService.Join(response.SessionId, userId);
+            await _sessionService.Join(response.SessionId, userId);
 
             return StatusCode(200, response);
         }
@@ -142,7 +149,7 @@ namespace WebService.Controllers
         [ProducesResponseType(typeof(GetSessionResponse), 200)]
         public async Task<ActionResult<GetSessionResponse>> GetById(string accessCode)
         {
-            var response = new GetSessionResponse();
+            //var response = new GetSessionResponse();
             try
             {
                 var result = await _sessionService.GetSessionByAccessCode(accessCode);
