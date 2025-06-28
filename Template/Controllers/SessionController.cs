@@ -164,9 +164,20 @@ namespace WebService.Controllers
                 await _hubContext.Clients.Group(request.SessionId.ToString())
                                          .SendAsync("ChangeSlide", request.SlideIndex);
                 Console.WriteLine(request.SessionId);
-                var response = await _historyService.SlideChange(request);
-
+                if (request.Ask != null)
+                {
+                    var response = await _historyService.SlideChange(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok(new { message = $"Slide cambiado a {request.SlideIndex} para la sesión {request.SessionId}" });
+                    }
+                    else
+                    {
+                        return BadRequest(new { message = response });
+                    }
+                }
                 
+
                 return Ok(new { message = $"Slide cambiado a {request.SlideIndex} para la sesión {request.SessionId}" });
             }
             catch (Exception ex)

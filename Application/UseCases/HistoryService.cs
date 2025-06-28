@@ -24,24 +24,14 @@ namespace Application.UseCases
         public async Task<List<GetParticipantResponse>> SessionPaticipants(Guid sessionId)
         {
             var participants = await _participantService.GetAllParticipants();
-            foreach(var i in participants)
-            {
-                Console.WriteLine(i.idUser);
-                Console.WriteLine(i.SessionId);
-                Console.WriteLine("hola");
-            }
+            
             if (participants == null) return new List<GetParticipantResponse>();
             else
             {
                 var sessionParticipants = participants
                     .Where(p => p.SessionId == sessionId && p.activityStatus == true)
                     .ToList();
-                foreach (var i in sessionParticipants)
-                {
-                    Console.WriteLine(i.idUser);
-                    Console.WriteLine(i.SessionId);
-                    Console.WriteLine("hola2");
-                }
+                
                 return sessionParticipants;
             }
         }
@@ -49,18 +39,17 @@ namespace Application.UseCases
         public async Task<HttpResponseMessage> SlideChange(ChangeSlideRequest newSlide)
         {
             var participants= await SessionPaticipants(newSlide.SessionId);
-            foreach(var i in newSlide.Options)
-            {
-                Console.WriteLine(i);
-            }
+            
+            if(participants.Count==0) return new HttpResponseMessage(System.Net.HttpStatusCode.NoContent);
+
             var slideSnaphot = new SlideSnapshotDto
             {
                 
                 SlideId = newSlide.SlideId,
                 SlideIndex = newSlide.SlideIndex,
-                Ask = newSlide.Ask ?? null,
-                AnswerCorrect = newSlide.AnswerCorrect ?? null,
-                Options = newSlide.Options ?? null,
+                Ask = newSlide.Ask,
+                AnswerCorrect = newSlide.AnswerCorrect,
+                Options = newSlide.Options,
                 ConnectedUserIds = participants.Select(p => new ParticipantHistoryDto
                 {
                     UserId=p.idUser,

@@ -26,7 +26,7 @@ namespace Infrastructrure.HttpClients
         {
             var jsonContent = JsonSerializer.Serialize(slide);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-            Console.WriteLine(await httpContent.ReadAsStringAsync());
+            //Console.WriteLine(await httpContent.ReadAsStringAsync());
             HttpResponseMessage response = await _httpClient.PostAsync($"api/History/{SessionId}/SlideChange", httpContent);
             return response;
 
