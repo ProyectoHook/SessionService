@@ -25,11 +25,13 @@ namespace WebService.Controllers
     {
         private readonly ISessionService _sessionService;
         private readonly IHubContext<SessionHub> _hubContext;
+        private readonly IHistoryService _historyService;
 
-        public SessionController(ISessionService sessionService, IHubContext<SessionHub> hubContext)
+        public SessionController(ISessionService sessionService, IHubContext<SessionHub> hubContext, IHistoryService historyService)
         {
             _sessionService = sessionService;
             _hubContext = hubContext;
+            _historyService = historyService;
         }
 
 
@@ -161,8 +163,33 @@ namespace WebService.Controllers
                 await _sessionService.UpdateCurrentSlide(request.SessionId, request.SlideIndex);
                 await _hubContext.Clients.Group(request.SessionId.ToString())
                                          .SendAsync("ChangeSlide", request.SlideIndex);
+                Console.WriteLine(request.SessionId);
+                var response = await _historyService.SlideChange(request);
 
+                
                 return Ok(new { message = $"Slide cambiado a {request.SlideIndex} para la sesión {request.SessionId}" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("submitAnswer")]
+        public async Task<ActionResult<SlideStatsResponse>> SubmitAnswer([FromBody] AnswerRequest answer)
+        {
+            try
+            {
+                if (answer == null || answer.SessionId == Guid.Empty)
+                {
+                    return BadRequest("Datos de respuesta inválidos.");
+                }
+                // Registrar la respuesta y obtener estadísticas
+                SlideStatsResponse stats = await _historyService.RecordAnswer(answer);
+                // Envia a todos los usuarios del grupo (El front solo se muestra al presentador)
+                await _hubContext.Clients.Group(answer.SessionId.ToString())
+                                         .SendAsync("UpdateStatistics", stats);
+                return Ok(stats);
             }
             catch (Exception ex)
             {

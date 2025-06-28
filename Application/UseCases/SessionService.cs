@@ -194,7 +194,7 @@ namespace Application.UseCases
 
         //}
 
-        public async Task<GetParticipantResponse> Join(Guid sessionId, Guid userId)
+        public async Task<createParticipantResponse> Join(Guid sessionId, Guid userId)
         {
 
             CreateParticipantRequest newParticipant = new CreateParticipantRequest
@@ -204,8 +204,8 @@ namespace Application.UseCases
             };
 
             createParticipantResponse results = await _participantService.CreateParticipant(newParticipant);
-
-            return _mapper.Map<GetParticipantResponse>(results);
+            return results;
+            //return _mapper.Map<GetParticipantResponse>(results);
         }
 
     }

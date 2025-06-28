@@ -13,6 +13,7 @@ using Application.Interfaces.Commands;
 using Application.Mappers;
 using Template.Hubs;
 using Infrastructrure.HttpClients;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,12 +40,19 @@ builder.Services.AddScoped<IParticipantCommand, ParticipantCommand>();
 builder.Services.AddScoped<IParticipantQuery, ParticipantQuery>();
 builder.Services.AddScoped<IParticipantService, ParticipantService>();
 
+builder.Services.AddScoped<IHistoryService, HistoryService>();
+
 builder.Services.AddHttpClient<IPresentationServiceClient, PresentationServiceClient>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7112/"); // O desde config
 });
+builder.Services.AddHttpClient<IHistoryServiceClient, HistoryServiceClient>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7280/"); // O desde config
+});
 
 //Mapper
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly()); // Buscará todos los Profile
 builder.Services.AddAutoMapper(typeof(Mapping));
 
 

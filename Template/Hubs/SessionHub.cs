@@ -1,15 +1,21 @@
 ﻿using Application.Interfaces.Services;
 using Microsoft.AspNetCore.SignalR;
+using Application.Request.SessionHub;
+using Application.Response;
 
 namespace Template.Hubs
 {
     public class SessionHub : Hub
     {
         private readonly ISessionService _sessionService;
+        private readonly IHistoryService _historyService;
 
-        public SessionHub(ISessionService sessionService)
+
+
+        public SessionHub(ISessionService sessionService, IHistoryService historyService)
         {
             _sessionService = sessionService;
+            _historyService = historyService;
         }
 
         //Cambiar slide
@@ -19,6 +25,20 @@ namespace Template.Hubs
             {
                 var response = await _sessionService.UpdateCurrentSlide(result, slideIndex);
                 await Clients.Group(sessionId).SendAsync("ReceiveSlide", slideIndex);
+            }
+        }
+
+        public async Task SubmitAnswer(string sessionId, AnswerRequest answer)
+        {
+            if (Guid.TryParse(sessionId, out Guid result))
+            {
+                // 1. Registrar la respuesta y obtener estadísticas
+                SlideStatsResponse stats = await _historyService.RecordAnswer(answer);
+
+               
+                // 3. Enviar a TODOS los usuarios del grupo
+                // (El frontend filtrará por rol)
+                await Clients.Group(sessionId).SendAsync("UpdateStatistics", stats);
             }
         }
 
