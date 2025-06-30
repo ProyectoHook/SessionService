@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using Application.Request.SessionHub;
 using Application.Response;
 using Azure.Core;
+using Domain.Entities;
 
 namespace Template.Hubs
 {
@@ -27,10 +28,16 @@ namespace Template.Hubs
                 if (slide.Ask != null)
                 {
                     var Response = await _historyService.SlideChange(slide);
-                    
                 }
                 var response = await _sessionService.UpdateCurrentSlide(result, slide.SlideIndex);
                 await Clients.Group(sessionId).SendAsync("ReceiveSlide", slide.SlideIndex); 
+            }
+        }
+        public async Task RaiseHand(string sessionId, string userId, string userName, bool status_btn)
+        {
+            if (Guid.TryParse(sessionId, out Guid session_result) && Guid.TryParse(userId, out Guid user_result))
+            {
+               await Clients.Group(sessionId).SendAsync("ChangeRaiseHandTail", userId,userName,status_btn);
             }
         }
 
