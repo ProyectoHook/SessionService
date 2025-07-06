@@ -15,10 +15,12 @@ namespace Application.UseCases
     {
         private readonly IHistoryServiceClient _historyServiceClient;
         private readonly IParticipantService _participantService;
-        public HistoryService(IHistoryServiceClient historyServiceClient, IParticipantService participantService)
+        private readonly ISessionService _sessionService;
+        public HistoryService(IHistoryServiceClient historyServiceClient, IParticipantService participantService, ISessionService sessionService)
         {
             _historyServiceClient = historyServiceClient;
             _participantService = participantService;
+            _sessionService = sessionService;
         }
 
         public async Task<List<GetParticipantResponse>> SessionPaticipants(Guid sessionId)
@@ -41,6 +43,11 @@ namespace Application.UseCases
             var participants= await SessionPaticipants(newSlide.SessionId);
             
             if(participants.Count==0) return new HttpResponseMessage(System.Net.HttpStatusCode.NoContent);
+            var session = _sessionService.GetAllSessions()
+                .Result
+                .FirstOrDefault(s => s.SessionId == newSlide.SessionId);
+            var userCreate = session.created_by;
+            var presentationId = session.presentation_id;
 
             var slideSnaphot = new SlideSnapshotDto
             {
@@ -54,7 +61,9 @@ namespace Application.UseCases
                 {
                     UserId=p.idUser,
                     Name = "Desconocido",
-                }).ToList()
+                }).ToList(),
+                UserCreateId = userCreate,
+                presentationId = presentationId
             };
 
             return await _historyServiceClient.RegisterSlideChange(newSlide.SessionId,slideSnaphot);
