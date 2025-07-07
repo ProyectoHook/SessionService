@@ -124,7 +124,7 @@ namespace WebService.Controllers
 
 
 
-            return Ok(new { message = "Sesión finalizada correctamente." });
+            return StatusCode(200,new { message = "Sesión finalizada correctamente." });
         }
         
 
