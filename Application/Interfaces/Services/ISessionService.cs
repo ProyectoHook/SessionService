@@ -18,6 +18,7 @@ namespace Application.Interfaces.Services
         Task<List<GetSessionResponse>> GetAllSessions();
         Task<GetSessionResponse> GetSessionByAccessCode(string accessCode);
         Task<CreateSessionResponse> UpdateCurrentSlide(Guid sessionId, int slideIndex);
+        Task<SessionDuration> GetDurationByGuid(Guid sessionId);
 
     }
 }

@@ -47,6 +47,7 @@ namespace Application.UseCases
             await _accesCodeCommand.Update(sessionAccesCode);
 
             result.access_code = null;
+            result.end_time = DateTime.Now;
 
             await _sessionCommand.Update(result);
             
@@ -214,6 +215,28 @@ namespace Application.UseCases
 
         }
 
+        public async Task<SessionDuration> GetDurationByGuid(Guid sessionId)
+        {
+            Session session = await _sessionQuery.GetById(sessionId);
+
+            if (session == null)
+            {
+                throw new ExceptionBadRequest("Session not found");
+            }
+
+            if(session.end_time == null)
+            {
+                throw new Exception("Error: no end_time seted");
+            }
+
+
+            var duration = session.end_time - session.start_time;
+
+            return new SessionDuration
+            {
+                Duration = (TimeSpan)duration!
+            };
+        }
     }
 }
 

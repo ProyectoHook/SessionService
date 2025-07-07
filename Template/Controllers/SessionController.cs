@@ -223,5 +223,25 @@ namespace WebService.Controllers
             return StatusCode(200, "Session Service activo");
         }
 
+        [HttpGet("{id}/duration")]
+        [ProducesResponseType(typeof(SessionDuration), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<SessionDuration>> GetSessionDuration(Guid id)
+        {
+            try
+            {
+                SessionDuration session = await _sessionService.GetDurationByGuid(id);
+
+                if (session == null)
+                    return NotFound(new { message = "Sesión no encontrada." });
+
+                return Ok(session);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Error al obtener la duración: " + ex.Message });
+            }
+        }
+
     }
 }
