@@ -12,6 +12,7 @@ namespace Infrastructrure.Persistence
     {
         public DbSet<Session> Session { get; set; }
         public DbSet<Participant> Participant { get; set; }
+        public DbSet<AccesCode> AccesCode { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -21,9 +22,15 @@ namespace Infrastructrure.Persistence
         {
             modelBuilder.Entity<Session>(entity =>
             {
-                entity.HasKey(e => e.idSession);
-                entity.Property(e => e.idSession).ValueGeneratedOnAdd();
+                entity.HasKey(e => e.SessionId);
+                entity.Property(e => e.SessionId).ValueGeneratedOnAdd();
 
+                entity.HasOne(s => s.AccesCode)
+                .WithOne(ac => ac.Session)
+                .HasForeignKey<Session>(f => f.access_code)
+                .OnDelete(DeleteBehavior.NoAction);
+                
+                
             });
             modelBuilder.Entity<Participant>(entity =>
             {
@@ -36,6 +43,11 @@ namespace Infrastructrure.Persistence
                 .HasForeignKey(n => n.idSession)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            });
+            modelBuilder.Entity<AccesCode>(entity =>
+            { 
+                entity.HasKey(e => e.idCode);
+                entity.Property(e => e.idCode).ValueGeneratedOnAdd();
             });
         }
     }

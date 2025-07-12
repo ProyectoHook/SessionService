@@ -9,15 +9,19 @@ namespace Application.Response
 {
     public class GetSessionResponse
     {
-        public int idSession { get; set; }
-        public Guid? acces_code { get; set; }
-        public required string description { get; set; }
+        public Guid SessionId { get; set; }
+        public int? acces_code { get; set; }
+        public string description { get; set; }
         public int interation_count { get; set; }
-        public required bool active_status { get; set; }
-        public required int max_participants { get; set; }
-        public required DateTime start_time { get; set; }
+        public  bool active_status { get; set; }
+        public  int max_participants { get; set; }
+        public  DateTime start_time { get; set; }
         public DateTime? end_time { get; set; }
-        public required int presentation_id { get; set; }
+        public  int presentation_id { get; set; }
+        public required Guid created_by { get; set; }
+        public int? currentSlide { get; set; }
+        public PresentationResponseDTO presentation { get; set; }
+
 
     }
 }

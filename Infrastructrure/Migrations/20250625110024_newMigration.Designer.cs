@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructrure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250504191647_first_setup")]
-    partial class first_setup
+    [Migration("20250625110024_newMigration")]
+    partial class newMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,26 @@ namespace Infrastructrure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Domain.Entities.AccesCode", b =>
+                {
+                    b.Property<int>("idCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idCode"));
+
+                    b.Property<string>("code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("idCode");
+
+                    b.ToTable("AccesCode");
+                });
 
             modelBuilder.Entity("Domain.Entities.Participant", b =>
                 {
@@ -36,14 +56,14 @@ namespace Infrastructrure.Migrations
                     b.Property<bool>("activityStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("connectionId")
+                    b.Property<int?>("connectionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("connectionStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("idSession")
-                        .HasColumnType("int");
+                    b.Property<Guid>("idSession")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("idUser")
                         .HasColumnType("uniqueidentifier");
@@ -57,17 +77,21 @@ namespace Infrastructrure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Session", b =>
                 {
-                    b.Property<int>("idSession")
+                    b.Property<Guid>("SessionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idSession"));
-
-                    b.Property<Guid?>("acces_code")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("access_code")
+                        .HasColumnType("int");
 
                     b.Property<bool>("active_status")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("created_by")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("currentSlide")
+                        .HasColumnType("int");
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -88,7 +112,11 @@ namespace Infrastructrure.Migrations
                     b.Property<DateTime>("start_time")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("idSession");
+                    b.HasKey("SessionId");
+
+                    b.HasIndex("access_code")
+                        .IsUnique()
+                        .HasFilter("[access_code] IS NOT NULL");
 
                     b.ToTable("Session");
                 });
@@ -102,6 +130,22 @@ namespace Infrastructrure.Migrations
                         .IsRequired();
 
                     b.Navigation("session");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Session", b =>
+                {
+                    b.HasOne("Domain.Entities.AccesCode", "AccesCode")
+                        .WithOne("Session")
+                        .HasForeignKey("Domain.Entities.Session", "access_code")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("AccesCode");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccesCode", b =>
+                {
+                    b.Navigation("Session")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Session", b =>

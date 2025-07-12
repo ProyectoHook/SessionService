@@ -1,4 +1,4 @@
-using Application.UseCases;
+﻿using Application.UseCases;
 using Infrastructrure.Command;
 using Infrastructrure.Persistence;
 using Infrastructrure.Query;
@@ -11,6 +11,9 @@ using Application.Interfaces.Services;
 using Application.Interfaces.Queries;
 using Application.Interfaces.Commands;
 using Application.Mappers;
+using Template.Hubs;
+using Infrastructrure.HttpClients;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,18 +24,37 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-var key = Encoding.ASCII.GetBytes("abcdefghijklmnopqrstuvwxyz123456");
+
+//JWT KEY
+var keyString = builder.Configuration["JwtSettings:SecretKey"];
+var key = Encoding.ASCII.GetBytes(keyString);
 
 builder.Services.AddScoped<ISessionCommand, SessionCommand>();
 builder.Services.AddScoped<ISessionQuery, SessionQuery>();
 builder.Services.AddScoped<ISessionService, SessionService>();
 
+builder.Services.AddScoped<IAccesCodeCommand, AccesCodeCommand>();
+builder.Services.AddScoped<IAccesCodeQuery, AccesCodeQuery>();
+
 builder.Services.AddScoped<IParticipantCommand, ParticipantCommand>();
 builder.Services.AddScoped<IParticipantQuery, ParticipantQuery>();
 builder.Services.AddScoped<IParticipantService, ParticipantService>();
 
+builder.Services.AddScoped<IHistoryService, HistoryService>();
+
+builder.Services.AddHttpClient<IPresentationServiceClient, PresentationServiceClient>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7112/"); // O desde config
+});
+builder.Services.AddHttpClient<IHistoryServiceClient, HistoryServiceClient>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7280/"); // O desde config
+});
+
 //Mapper
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly()); // Buscará todos los Profile
 builder.Services.AddAutoMapper(typeof(Mapping));
+
 
 //habilita sesiones
 builder.Services.AddDistributedMemoryCache();
@@ -43,6 +65,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+//JWT Config
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,7 +73,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = true;
+    options.RequireHttpsMetadata = false; // pon false si usas HTTP local
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -63,6 +86,28 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization();
+
+
+// Configuración de CORS
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500", "http://127.0.0.1:5501", "https://127.0.0.1:5500")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowCredentials(); // Si usás credenciales
+                      });
+});
+
+//SignalR
+builder.Services.AddSignalR();
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -71,14 +116,26 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// routing antes de auth
+app.UseRouting();
+
+// CORS antes de auth si se usa cookies
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseHttpsRedirection();
 
+// sesiones primero
+app.UseSession();
+
+// luego auth
 app.UseAuthentication();
 app.UseAuthorization();
 
-//ativa sesiones
-app.UseSession();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<SessionHub>("/sessionHub");
+});
 
 app.Run();

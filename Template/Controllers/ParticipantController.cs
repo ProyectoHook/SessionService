@@ -5,12 +5,13 @@ using Application.Response;
 using Application.UseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Template.Controllers
 {
     [ApiController]
-    [Route("participant")]
+    [Route("api/v1/participant")]
     public class ParticipantController : ControllerBase
     {
         private readonly IParticipantService _participantService;
@@ -20,15 +21,17 @@ namespace Template.Controllers
             _participantService = participantService;
         }
 
-        [HttpPost]
-        [ProducesResponseType(200)]
+        [HttpPost("create")]
+        [Authorize]
+        [ProducesResponseType(typeof(createParticipantResponse), 201)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateParticipant([FromBody] CreateParticipantRequest request)
         {
             try
             {
-                var result = await _participantService.CreateParticipant(request);
-                return Ok("Usuario ingresado a la sesión"); // Devuelve 201 Created sin contenido
+                var response = await _participantService.CreateParticipant(request);
+
+                return StatusCode(201, response);
             }
             catch (Exception ex)
             {
@@ -36,7 +39,9 @@ namespace Template.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+
+        [HttpGet("getById/{id}")]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<GetParticipantResponse>> GetByIdParticipant(int id)
@@ -52,7 +57,8 @@ namespace Template.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
+        [Authorize]
         [ProducesResponseType(200)]
         public async Task<ActionResult<List<GetParticipantResponse>>> GetAllParticipants()
         {

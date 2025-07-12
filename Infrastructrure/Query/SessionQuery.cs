@@ -22,12 +22,20 @@ namespace Infrastructrure.Query
 
         public async Task<List<Session>> GetAll()
         {
-            return await _context.Session.ToListAsync();
+            return await _context.Session
+                .Include(s => s.AccesCode)
+                .Include(p => p.Participants)
+                .ToListAsync();
         }
 
-        public async Task<Session> GetById(int id)
+        public async Task<Session> GetById(Guid id)
         {
             return await _context.Session.FindAsync(id);
+        }
+
+        public async Task<Session> GetByAccessCode(string accessCode)
+        {
+            return await _context.Session.Where(s => s.AccesCode.code == accessCode).FirstOrDefaultAsync();
         }
     }
 }

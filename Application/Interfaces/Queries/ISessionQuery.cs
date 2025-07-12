@@ -9,7 +9,8 @@ namespace Application.Interfaces.Queries
 {
     public interface ISessionQuery
     {
-        Task<Session> GetById(int id);
+        Task<Session> GetById(Guid id);
+        Task<Session> GetByAccessCode(string accessCode);
         Task<List<Session>> GetAll();
     }
 }

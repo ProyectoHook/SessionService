@@ -8,9 +8,8 @@ namespace Application.Response
 {
     public class CreateSessionResponse
     {
-        public int idSession { get; set; }
-        public Guid? acces_code { get; set; }
-
-
+        public Guid SessionId { get; set; }
+        public string acces_code { get; set; }
+        public PresentationResponseDTO presentation { get; set; }
     }
 }

@@ -10,9 +10,7 @@ namespace Application.Request
     public class CreateParticipantRequest
     {        
         public required Guid idUser { get; set; }
-        public required int connectionId { get; set; }
-
-        public required int idSession { get; set; }
+        public required Guid idSession { get; set; }
 
     }
 }
